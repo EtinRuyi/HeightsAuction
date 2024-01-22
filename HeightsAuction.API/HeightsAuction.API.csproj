@@ -18,4 +18,8 @@
     <Folder Include="APIConfigurations\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\HeightsAuction.Common\HeightsAuction.Common.csproj" />
+  </ItemGroup>
+
 </Project>

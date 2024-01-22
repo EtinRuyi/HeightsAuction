@@ -1,10 +1,12 @@
 using NLog.Web;
 using NLog;
+using HeightsAuction.API.Mapper;
+using HeightsAuction.Common.Utilities;
 
 
 
 var builder = WebApplication.CreateBuilder(args);
-//ConfigurationHelper.InstantiateConfiguration(builder.Configuration);
+ConfigurationHelper.InstantiateConfiguration(builder.Configuration);
 
 var configuration = builder.Configuration;
 var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
