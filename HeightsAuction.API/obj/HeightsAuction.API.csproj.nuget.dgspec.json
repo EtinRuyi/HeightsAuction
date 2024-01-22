@@ -60,6 +60,10 @@
               "target": "Package",
               "version": "[7.0.14, )"
             },
+            "NLog.Database": {
+              "target": "Package",
+              "version": "[5.2.8, )"
+            },
             "NLog.Web.AspNetCore": {
               "target": "Package",
               "version": "[5.3.8, )"
@@ -137,6 +141,10 @@
               "target": "Package",
               "version": "[12.0.1, )"
             },
+            "NLog.Database": {
+              "target": "Package",
+              "version": "[5.2.8, )"
+            },
             "NLog.Web.AspNetCore": {
               "target": "Package",
               "version": "[5.3.8, )"
@@ -206,6 +214,10 @@
             "AutoMapper": {
               "target": "Package",
               "version": "[12.0.1, )"
+            },
+            "NLog.Database": {
+              "target": "Package",
+              "version": "[5.2.8, )"
             },
             "NLog.Web.AspNetCore": {
               "target": "Package",

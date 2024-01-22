@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "UPIJVZpve53B3eTjTuX0/GKWfqsZpqpdAGFlm3IdbRF8tr7cPdyyb8YdzqjGtSGk3byKIrqhfLllXrTLO7Qukg==",
+  "dgSpecHash": "I07ZkhJ4T2gSJS9Inas+MFyRF93npv8sjsdHbo2Ysg4hU+BTUM6ZLsH3uxpbVlJbrzkippQ+c/RQSoTRHC+/ew==",
   "success": true,
   "projectFilePath": "C:\\Users\\omoru\\Desktop\\HeightsAuction\\HeightsAuction.API\\HeightsAuction.API.csproj",
   "expectedPackageFiles": [
@@ -17,6 +17,7 @@
     "C:\\Users\\omoru\\.nuget\\packages\\microsoft.extensions.primitives\\6.0.0\\microsoft.extensions.primitives.6.0.0.nupkg.sha512",
     "C:\\Users\\omoru\\.nuget\\packages\\microsoft.openapi\\1.4.3\\microsoft.openapi.1.4.3.nupkg.sha512",
     "C:\\Users\\omoru\\.nuget\\packages\\nlog\\5.2.8\\nlog.5.2.8.nupkg.sha512",
+    "C:\\Users\\omoru\\.nuget\\packages\\nlog.database\\5.2.8\\nlog.database.5.2.8.nupkg.sha512",
     "C:\\Users\\omoru\\.nuget\\packages\\nlog.extensions.logging\\5.3.8\\nlog.extensions.logging.5.3.8.nupkg.sha512",
     "C:\\Users\\omoru\\.nuget\\packages\\nlog.web.aspnetcore\\5.3.8\\nlog.web.aspnetcore.5.3.8.nupkg.sha512",
     "C:\\Users\\omoru\\.nuget\\packages\\swashbuckle.aspnetcore\\6.5.0\\swashbuckle.aspnetcore.6.5.0.nupkg.sha512",

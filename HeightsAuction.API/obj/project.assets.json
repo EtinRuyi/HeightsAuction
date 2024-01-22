@@ -207,6 +207,22 @@
           }
         }
       },
+      "NLog.Database/5.2.8": {
+        "type": "package",
+        "dependencies": {
+          "NLog": "5.2.8"
+        },
+        "compile": {
+          "lib/netstandard2.0/NLog.Database.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/NLog.Database.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "NLog.Extensions.Logging/5.3.8": {
         "type": "package",
         "dependencies": {
@@ -347,6 +363,7 @@
         "framework": ".NETCoreApp,Version=v7.0",
         "dependencies": {
           "AutoMapper": "12.0.1",
+          "NLog.Database": "5.2.8",
           "NLog.Web.AspNetCore": "5.3.8"
         },
         "compile": {
@@ -361,6 +378,7 @@
         "framework": ".NETCoreApp,Version=v7.0",
         "dependencies": {
           "AutoMapper": "12.0.1",
+          "NLog.Database": "5.2.8",
           "NLog.Web.AspNetCore": "5.3.8"
         },
         "compile": {
@@ -929,6 +947,31 @@
         "nlog.nuspec"
       ]
     },
+    "NLog.Database/5.2.8": {
+      "sha512": "2+wmOSAC6ClKVD7mCeWpLVUVMslAZfJ45hwx5VIpVteFyApkj+W0lkUTzafg2sh0J0LCGsN5J8Uk5smHqiebzA==",
+      "type": "package",
+      "path": "nlog.database/5.2.8",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "N.png",
+        "README.md",
+        "lib/net35/NLog.Database.dll",
+        "lib/net35/NLog.Database.xml",
+        "lib/net45/NLog.Database.dll",
+        "lib/net45/NLog.Database.xml",
+        "lib/net46/NLog.Database.dll",
+        "lib/net46/NLog.Database.xml",
+        "lib/netstandard1.3/NLog.Database.dll",
+        "lib/netstandard1.3/NLog.Database.xml",
+        "lib/netstandard1.5/NLog.Database.dll",
+        "lib/netstandard1.5/NLog.Database.xml",
+        "lib/netstandard2.0/NLog.Database.dll",
+        "lib/netstandard2.0/NLog.Database.xml",
+        "nlog.database.5.2.8.nupkg.sha512",
+        "nlog.database.nuspec"
+      ]
+    },
     "NLog.Extensions.Logging/5.3.8": {
       "sha512": "6VD0lyeokWltL6j8lO7mS7v7lbuO/qn0F7kdvhKhEx1JvFyD39nzohOK3JvkVh4Nn3mrcMDCyDxvTvmiW55jQg==",
       "type": "package",
@@ -1138,6 +1181,7 @@
       "HeightsAuction.Common >= 1.0.0",
       "HeightsAuction.Persistence >= 1.0.0",
       "Microsoft.AspNetCore.OpenApi >= 7.0.14",
+      "NLog.Database >= 5.2.8",
       "NLog.Web.AspNetCore >= 5.3.8",
       "Swashbuckle.AspNetCore >= 6.5.0"
     ]
@@ -1201,6 +1245,10 @@
           "Microsoft.AspNetCore.OpenApi": {
             "target": "Package",
             "version": "[7.0.14, )"
+          },
+          "NLog.Database": {
+            "target": "Package",
+            "version": "[5.2.8, )"
           },
           "NLog.Web.AspNetCore": {
             "target": "Package",
