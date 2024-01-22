@@ -2,6 +2,7 @@ using NLog.Web;
 using NLog;
 using HeightsAuction.API.Mapper;
 using HeightsAuction.Common.Utilities;
+using HeightsAuction.Persistence.ServiceExtension;
 
 
 
@@ -19,7 +20,7 @@ try
     builder.Services.AddSwaggerGen();
 
     // Register SaviThrift services using the extension class
-    //builder.Services.AddDependencies(configuration);
+    builder.Services.AddDependencies(configuration);
 
     builder.Services.AddControllers();
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -41,7 +42,7 @@ try
     using (var scope = app.Services.CreateScope())
     {
         var serviceProvider = scope.ServiceProvider;
-        //await Seeder.SeedRolesAndSuperAdmin(serviceProvider);
+        await Seeder.SeedRolesAndSuperAdmin(serviceProvider);
     }
     app.UseHttpsRedirection();
 

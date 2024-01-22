@@ -355,6 +355,20 @@
         "runtime": {
           "bin/placeholder/HeightsAuction.Common.dll": {}
         }
+      },
+      "HeightsAuction.Persistence/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "dependencies": {
+          "AutoMapper": "12.0.1",
+          "NLog.Web.AspNetCore": "5.3.8"
+        },
+        "compile": {
+          "bin/placeholder/HeightsAuction.Persistence.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/HeightsAuction.Persistence.dll": {}
+        }
       }
     }
   },
@@ -1111,12 +1125,18 @@
       "type": "project",
       "path": "../HeightsAuction.Common/HeightsAuction.Common.csproj",
       "msbuildProject": "../HeightsAuction.Common/HeightsAuction.Common.csproj"
+    },
+    "HeightsAuction.Persistence/1.0.0": {
+      "type": "project",
+      "path": "../HeightsAuction.Persistence/HeightsAuction.Persistence.csproj",
+      "msbuildProject": "../HeightsAuction.Persistence/HeightsAuction.Persistence.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net7.0": [
       "AutoMapper >= 12.0.1",
       "HeightsAuction.Common >= 1.0.0",
+      "HeightsAuction.Persistence >= 1.0.0",
       "Microsoft.AspNetCore.OpenApi >= 7.0.14",
       "NLog.Web.AspNetCore >= 5.3.8",
       "Swashbuckle.AspNetCore >= 6.5.0"
@@ -1157,6 +1177,9 @@
           "projectReferences": {
             "C:\\Users\\omoru\\Desktop\\HeightsAuction\\HeightsAuction.Common\\HeightsAuction.Common.csproj": {
               "projectPath": "C:\\Users\\omoru\\Desktop\\HeightsAuction\\HeightsAuction.Common\\HeightsAuction.Common.csproj"
+            },
+            "C:\\Users\\omoru\\Desktop\\HeightsAuction\\HeightsAuction.Persistence\\HeightsAuction.Persistence.csproj": {
+              "projectPath": "C:\\Users\\omoru\\Desktop\\HeightsAuction\\HeightsAuction.Persistence\\HeightsAuction.Persistence.csproj"
             }
           }
         }

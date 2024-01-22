@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HeightsAuction.Common\HeightsAuction.Common.csproj" />
+    <ProjectReference Include="..\HeightsAuction.Persistence\HeightsAuction.Persistence.csproj" />
   </ItemGroup>
 
 </Project>
