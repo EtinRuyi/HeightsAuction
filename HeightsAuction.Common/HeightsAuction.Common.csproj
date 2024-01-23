@@ -12,4 +12,8 @@
     <PackageReference Include="NLog.Web.AspNetCore" Version="5.3.8" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\HeightsAuction.Domain\HeightsAuction.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

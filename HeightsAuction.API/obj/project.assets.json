@@ -363,6 +363,7 @@
         "framework": ".NETCoreApp,Version=v7.0",
         "dependencies": {
           "AutoMapper": "12.0.1",
+          "HeightsAuction.Domain": "1.0.0",
           "NLog.Database": "5.2.8",
           "NLog.Web.AspNetCore": "5.3.8"
         },
@@ -371,6 +372,21 @@
         },
         "runtime": {
           "bin/placeholder/HeightsAuction.Common.dll": {}
+        }
+      },
+      "HeightsAuction.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "dependencies": {
+          "AutoMapper": "12.0.1",
+          "NLog.Database": "5.2.8",
+          "NLog.Web.AspNetCore": "5.3.8"
+        },
+        "compile": {
+          "bin/placeholder/HeightsAuction.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/HeightsAuction.Domain.dll": {}
         }
       },
       "HeightsAuction.Persistence/1.0.0": {
@@ -1168,6 +1184,11 @@
       "type": "project",
       "path": "../HeightsAuction.Common/HeightsAuction.Common.csproj",
       "msbuildProject": "../HeightsAuction.Common/HeightsAuction.Common.csproj"
+    },
+    "HeightsAuction.Domain/1.0.0": {
+      "type": "project",
+      "path": "../HeightsAuction.Domain/HeightsAuction.Domain.csproj",
+      "msbuildProject": "../HeightsAuction.Domain/HeightsAuction.Domain.csproj"
     },
     "HeightsAuction.Persistence/1.0.0": {
       "type": "project",
