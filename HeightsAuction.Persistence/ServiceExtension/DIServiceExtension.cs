@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using HeightsAuction.Persistence.AppContext;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -15,8 +17,8 @@ namespace HeightsAuction.Persistence.ServiceExtension
         public static void AddDependencies(this IServiceCollection services, IConfiguration configuration)
         {
             // Register DbContext
-            //services.AddDbContext<SaviDbContext>(options =>
-                //options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<HAuctionDBContext>(options =>
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
             // Register Identity
             //services.AddIdentity<AppUser, IdentityRole>()
