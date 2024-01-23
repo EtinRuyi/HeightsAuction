@@ -24,4 +24,10 @@
     <PackageReference Include="NLog.Web.AspNetCore" Version="5.3.8" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DTOs\" />
+    <Folder Include="Interfaces\Services\" />
+    <Folder Include="ServicesImplementations\" />
+  </ItemGroup>
+
 </Project>
