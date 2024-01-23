@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\HeightsAuction.Application\HeightsAuction.Application.csproj" />
     <ProjectReference Include="..\HeightsAuction.Domain\HeightsAuction.Domain.csproj" />
   </ItemGroup>
 

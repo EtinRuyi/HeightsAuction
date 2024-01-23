@@ -10,7 +10,10 @@ namespace HeightsAuction.Domain.Entities
         public Invoice Invoice { get; set; }
         public decimal Amount { get; set; }
         public PaymentStatus PaymentStatus { get; set; }
+        public PaymentMethod PaymentMethod { get; set; }
+
         [ForeignKey("AppUserId")]
         public string UserId { get; set; }
+        public bool IsSuccessful { get; set; }
     }
 }

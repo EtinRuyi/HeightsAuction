@@ -1403,6 +1403,26 @@
           }
         }
       },
+      "HeightsAuction.Application/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "dependencies": {
+          "AutoMapper": "12.0.1",
+          "HeightsAuction.Domain": "1.0.0",
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "7.0.0",
+          "Microsoft.EntityFrameworkCore": "7.0.0",
+          "Microsoft.EntityFrameworkCore.SqlServer": "7.0.0",
+          "Microsoft.Extensions.DependencyInjection": "7.0.0",
+          "NLog.Database": "5.2.8",
+          "NLog.Web.AspNetCore": "5.3.8"
+        },
+        "compile": {
+          "bin/placeholder/HeightsAuction.Application.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/HeightsAuction.Application.dll": {}
+        }
+      },
       "HeightsAuction.Common/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v7.0",
@@ -1447,6 +1467,7 @@
         "framework": ".NETCoreApp,Version=v7.0",
         "dependencies": {
           "AutoMapper": "12.0.1",
+          "HeightsAuction.Application": "1.0.0",
           "HeightsAuction.Domain": "1.0.0",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "7.0.0",
           "Microsoft.EntityFrameworkCore": "7.0.0",
@@ -4339,6 +4360,11 @@
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
+    },
+    "HeightsAuction.Application/1.0.0": {
+      "type": "project",
+      "path": "../HeightsAuction.Application/HeightsAuction.Application.csproj",
+      "msbuildProject": "../HeightsAuction.Application/HeightsAuction.Application.csproj"
     },
     "HeightsAuction.Common/1.0.0": {
       "type": "project",

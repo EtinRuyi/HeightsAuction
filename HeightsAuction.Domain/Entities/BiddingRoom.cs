@@ -4,13 +4,14 @@ namespace HeightsAuction.Domain.Entities
 {
     public class BiddingRoom : BaseEntity
     {
-        public string RoomName { get; set; }
-        public string ItemName { get; set; }
+        public string Title { get; set; }
+        public Item Item { get; set; }
         public string WinningBidId { get; set; }
         public Bid WinningBid { get; set; }
         public List<Bid> Bids { get; set; } = new List<Bid>();
-        public ICollection<AppUser> Participants { get; set; } = new List<AppUser>();
-        public DateTime? EndTime { get; set; }
-        public bool IsRoomActive { get; set; }
+        public ICollection<AppUser> Bidders { get; set; } = new List<AppUser>();
+        public DateTime? AuctionStartDate { get; set; }
+        public DateTime? AuctionEndDate { get; set; }
+        public bool HasFinished { get; set; }
     }
 }
