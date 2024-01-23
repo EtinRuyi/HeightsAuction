@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using HeightsAuction.Domain.Enums;
+using Microsoft.AspNetCore.Identity;
 
 namespace HeightsAuction.Domain.Entities
 {
