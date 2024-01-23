@@ -30,4 +30,8 @@
     <Folder Include="ServicesImplementations\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\HeightsAuction.Domain\HeightsAuction.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
