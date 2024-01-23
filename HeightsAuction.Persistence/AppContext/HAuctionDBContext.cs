@@ -11,6 +11,7 @@ namespace HeightsAuction.Persistence.AppContext
         public DbSet<Bid> Bids { get; set; }
         public DbSet<BiddingRoom> BiddingRooms { get; set; }
         public DbSet<Invoice> Invoices { get; set; }
+        public DbSet<Item> Items { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<BidNotification> BidNotifications { get; set; }
     }
