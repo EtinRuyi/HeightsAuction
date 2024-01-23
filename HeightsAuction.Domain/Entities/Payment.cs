@@ -1,5 +1,6 @@
 ﻿using HeightsAuction.Domain.Entities.SharedEntities;
 using HeightsAuction.Domain.Enums;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HeightsAuction.Domain.Entities
 {
@@ -9,5 +10,7 @@ namespace HeightsAuction.Domain.Entities
         public Invoice Invoice { get; set; }
         public decimal Amount { get; set; }
         public PaymentStatus PaymentStatus { get; set; }
+        [ForeignKey("AppUserId")]
+        public string UserId { get; set; }
     }
 }

@@ -11,5 +11,6 @@ namespace HeightsAuction.Domain.Entities
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
         public bool IsDeleted { get; set; }
+        public ICollection<Bid> Bids { get; set; } = new List<Bid>();
     }
 }
