@@ -18,39 +18,39 @@ namespace HeightsAuction.Application.ServicesImplementations
             _logger = Logger;
         }
 
-        public async Task SendEmailAsync(string link, string email)
-        {
-            try
-            {
-                var bodyBuilder = new BodyBuilder
-                {
-                    HtmlBody = $"{link}><br>Click here to confirm your email</a>"
-                };
+        //public async Task SendEmailAsync(string link, string email)
+        //{
+        //    try
+        //    {
+        //        var bodyBuilder = new BodyBuilder
+        //        {
+        //            HtmlBody = $"{link}><br>Click here to confirm your email</a>"
+        //        };
 
 
-                var emailMessage = new MimeMessage();
+        //        var emailMessage = new MimeMessage();
 
-                emailMessage.From.Add(new MailboxAddress(_emailSettings.DisplayName, _emailSettings.Email));
-                emailMessage.To.Add(new MailboxAddress(email, email));
-                emailMessage.Subject = "Confirm your email";
+        //        emailMessage.From.Add(new MailboxAddress(_emailSettings.DisplayName, _emailSettings.Email));
+        //        emailMessage.To.Add(new MailboxAddress(email, email));
+        //        emailMessage.Subject = "Confirm your email";
 
 
 
-                emailMessage.Body = bodyBuilder.ToMessageBody();
+        //        emailMessage.Body = bodyBuilder.ToMessageBody();
 
-                using var client = new SmtpClient();
-                await client.ConnectAsync(_emailSettings.Host, _emailSettings.Port, SecureSocketOptions.SslOnConnect);
-                await client.AuthenticateAsync(_emailSettings.Email, _emailSettings.Password);
-                await client.SendAsync(emailMessage);
-                await client.DisconnectAsync(true);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error occurred while sending email.");
+        //        using var client = new SmtpClient();
+        //        await client.ConnectAsync(_emailSettings.Host, _emailSettings.Port, SecureSocketOptions.SslOnConnect);
+        //        await client.AuthenticateAsync(_emailSettings.Email, _emailSettings.Password);
+        //        await client.SendAsync(emailMessage);
+        //        await client.DisconnectAsync(true);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex, "Error occurred while sending email.");
 
-                throw new Exception("Error occurred while sending email. Please try again later.", ex);
-            }
-        }
+        //        throw new Exception("Error occurred while sending email. Please try again later.", ex);
+        //    }
+        //}
         public async Task SendMailAsync(MailRequest mailRequest)
         {
             try

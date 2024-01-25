@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "eB3Ll7zpd4hBOFxf/rb4veAc5epkKC8L5f7ePrYSoju5/mD86EDw05fRHBKjXWe0dUkeB+ZO/fXyvVD3Zo7uDA==",
+  "dgSpecHash": "SkEHxW1mwU4jh/qKphCquoJEB7gFxvMuCkSV9un6WOKtGlf5xbNAaRbdKf8z6R//GbrLF5QFkszT5pglDYNcwg==",
   "success": true,
   "projectFilePath": "C:\\Users\\omoru\\Desktop\\HeightsAuction\\HeightsAuction.API\\HeightsAuction.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\omoru\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
+    "C:\\Users\\omoru\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
     "C:\\Users\\omoru\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\omoru\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
     "C:\\Users\\omoru\\.nuget\\packages\\bouncycastle.cryptography\\2.2.1\\bouncycastle.cryptography.2.2.1.nupkg.sha512",

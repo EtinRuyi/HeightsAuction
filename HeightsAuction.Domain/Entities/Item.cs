@@ -7,6 +7,6 @@ namespace HeightsAuction.Domain.Entities
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal StartingPrice { get; set; }
-        public decimal CurrentBid { get; set; }
+        public decimal CurrentBidPrice { get; set; }
     }
 }

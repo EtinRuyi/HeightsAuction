@@ -19,6 +19,7 @@ namespace HeightsAuction.Persistence.ServiceExtension
             configuration.GetSection("EmailSettings").Bind(emailSettings);
             services.AddSingleton(emailSettings);
             services.AddTransient<IEmailServices, EmailServices>();
+            services.AddScoped<IAuthenticationServices, AuthenticationServices>();
 
             // Register Identity
             //services.AddIdentity<AppUser, IdentityRole>()
@@ -28,7 +29,7 @@ namespace HeightsAuction.Persistence.ServiceExtension
             // Register RoleManager
             // services.AddScoped<RoleManager<IdentityRole>>();
             //services.AddScoped<IUserService, UserService>();
-            //services.AddScoped<IAuthenticationService, AuthenticationService>();
+            
 
 
 

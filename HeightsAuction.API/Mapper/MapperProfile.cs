@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using HeightsAuction.Application.DTOs;
+using HeightsAuction.Domain.Entities;
 
 namespace HeightsAuction.API.Mapper
 {
@@ -6,7 +8,9 @@ namespace HeightsAuction.API.Mapper
     {
         public MapperProfile()
         {
-            
+            CreateMap<AppUser, RegisterResponseDto>().ReverseMap();
+            CreateMap<RegisterRequestDto, AppUser>();
+            CreateMap<AppUser, LoginResponseDto>().ReverseMap();
         }
     }
 }

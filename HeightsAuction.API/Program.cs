@@ -29,7 +29,7 @@ try
     builder.Services.AddSwaggerGen();
     builder.Services.AddAuthentication();
     builder.Services.ConfigureAuthentication(configuration);
-    //builder.Services.AddAutoMapper(typeof(MapperProfile));
+    builder.Services.AddAutoMapper(typeof(MapperProfile));
     builder.Logging.ClearProviders();
     builder.Host.UseNLog();
     var app = builder.Build();
