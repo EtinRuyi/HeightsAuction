@@ -1533,6 +1533,7 @@
         "dependencies": {
           "AutoMapper": "12.0.1",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "12.0.1",
+          "HeightsAuction.Common": "1.0.0",
           "HeightsAuction.Domain": "1.0.0",
           "MailKit": "4.3.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "7.0.0",

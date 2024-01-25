@@ -1,7 +1,11 @@
-﻿using HeightsAuction.Application.Interfaces.Services;
+﻿using HeightsAuction.Application.Interfaces.Repositories;
+using HeightsAuction.Application.Interfaces.Services;
 using HeightsAuction.Application.ServicesImplementations;
+using HeightsAuction.Domain.Entities;
 using HeightsAuction.Domain.Entities.Helper;
 using HeightsAuction.Persistence.AppContext;
+using HeightsAuction.Persistence.Repositories;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,25 +21,18 @@ namespace HeightsAuction.Persistence.ServiceExtension
 
             var emailSettings = new EmailSettings();
             configuration.GetSection("EmailSettings").Bind(emailSettings);
+
             services.AddSingleton(emailSettings);
-            services.AddTransient<IEmailServices, EmailServices>();
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IEmailServices, EmailServices>();
             services.AddScoped<IAuthenticationServices, AuthenticationServices>();
-
-            // Register Identity
-            //services.AddIdentity<AppUser, IdentityRole>()
-            //.AddEntityFrameworkStores<SaviDbContext>()
-            //.AddDefaultTokenProviders();
-
-            // Register RoleManager
-            // services.AddScoped<RoleManager<IdentityRole>>();
-            //services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserServices, UserServices>();
+            services.AddIdentity<AppUser, IdentityRole>()
+            .AddEntityFrameworkStores<HAuctionDBContext>()
+            .AddDefaultTokenProviders();
+            services.AddScoped<RoleManager<IdentityRole>>();
             
-
-
-
-            // Register GenericRepository
-            //services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-            //services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
     }
 }

@@ -7,6 +7,7 @@
         IInvoiceRepository Invoices { get; }
         IPaymentRepository Payments { get; }
         IBidNotification Notifications { get; }
+        IUserRepository Users { get; }
         Task<int> SaveChangesAsync();
     }
 }
