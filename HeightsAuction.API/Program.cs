@@ -3,6 +3,7 @@ using NLog;
 using HeightsAuction.API.Mapper;
 using HeightsAuction.Common.Utilities;
 using HeightsAuction.Persistence.ServiceExtension;
+using HeightsAuction.API.APIConfigurations;
 
 
 
@@ -21,13 +22,13 @@ try
 
     // Register SaviThrift services using the extension class
     builder.Services.AddDependencies(configuration);
-
+    builder.Services.AddMailService(configuration);
     builder.Services.AddControllers();
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
     builder.Services.AddAuthentication();
-    //builder.Services.ConfigureAuthentication(configuration);
+    builder.Services.ConfigureAuthentication(configuration);
     //builder.Services.AddAutoMapper(typeof(MapperProfile));
     builder.Logging.ClearProviders();
     builder.Host.UseNLog();

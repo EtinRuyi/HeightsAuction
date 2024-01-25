@@ -1,14 +1,10 @@
-﻿using HeightsAuction.Persistence.AppContext;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Identity;
+﻿using HeightsAuction.Application.Interfaces.Services;
+using HeightsAuction.Application.ServicesImplementations;
+using HeightsAuction.Domain.Entities.Helper;
+using HeightsAuction.Persistence.AppContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HeightsAuction.Persistence.ServiceExtension
 {
@@ -16,17 +12,21 @@ namespace HeightsAuction.Persistence.ServiceExtension
     {
         public static void AddDependencies(this IServiceCollection services, IConfiguration configuration)
         {
-            // Register DbContext
             services.AddDbContext<HAuctionDBContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
+            var emailSettings = new EmailSettings();
+            configuration.GetSection("EmailSettings").Bind(emailSettings);
+            services.AddSingleton(emailSettings);
+            services.AddTransient<IEmailServices, EmailServices>();
+
             // Register Identity
             //services.AddIdentity<AppUser, IdentityRole>()
-                //.AddEntityFrameworkStores<SaviDbContext>()
-                //.AddDefaultTokenProviders();
+            //.AddEntityFrameworkStores<SaviDbContext>()
+            //.AddDefaultTokenProviders();
 
             // Register RoleManager
-           // services.AddScoped<RoleManager<IdentityRole>>();
+            // services.AddScoped<RoleManager<IdentityRole>>();
             //services.AddScoped<IUserService, UserService>();
             //services.AddScoped<IAuthenticationService, AuthenticationService>();
 
