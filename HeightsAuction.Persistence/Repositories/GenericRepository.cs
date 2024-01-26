@@ -13,8 +13,6 @@ namespace HeightsAuction.Persistence.Repositories
 
         public async Task AddAsync(T entity) => await _context.Set<T>().AddAsync(entity);
 
-        public void DeleteAllAsync(List<T> entities) => _context.Set<T>().RemoveRange(entities);
-
         public void DeleteAsync(T entity) => _context.Set<T>().Remove(entity);
 
         public async Task<List<T>> FindAsync(Expression<Func<T, bool>> expression) => await _context.Set<T>().Where(expression).ToListAsync();

@@ -5,13 +5,11 @@ namespace HeightsAuction.Application.Interfaces.Repositories
 {
     public interface IBiddingRoomRepository : IGenericRepository<BiddingRoom>
     {
-        Task<BiddingRoom> GetBiddingRoomByIdAsync(string id);
-        Task<List<BiddingRoom>> GetAllBiddingRoomssAsync();
-        Task<List<BiddingRoom>> FindBiddingRooms(Expression<Func<BiddingRoom, bool>> expression);
-        Task CreateBiddingRoomAsync(BiddingRoom biddingRoom);
-        void UpdateBiddingRoomAsync(BiddingRoom biddingRoom);
-        Task DeleteBiddingRoomAsync(BiddingRoom biddingRoom);
-        Task<List<BiddingRoom>> ActiveAuctionsAsync();
-        Task<BiddingRoom> GetBiddingRoomWinnerAsync(Expression<Func<BiddingRoom, bool>> expression);
+        Task<BiddingRoom> GetRoomByIdAsync(string id);
+        Task<List<BiddingRoom>> GetAllRoomssAsync();
+        Task<List<BiddingRoom>> FindRooms(Expression<Func<BiddingRoom, bool>> expression);
+        Task CreateRoomAsync(BiddingRoom biddingRoom);
+        //Task<List<BiddingRoom>> ActiveAuctionsAsync();
+        //Task<BiddingRoom> GetBiddingRoomWinnerAsync(Expression<Func<BiddingRoom, bool>> expression);
     }
 }

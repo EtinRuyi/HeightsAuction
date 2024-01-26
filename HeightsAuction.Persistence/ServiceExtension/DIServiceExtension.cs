@@ -18,16 +18,17 @@ namespace HeightsAuction.Persistence.ServiceExtension
         {
             services.AddDbContext<HAuctionDBContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
-
             var emailSettings = new EmailSettings();
             configuration.GetSection("EmailSettings").Bind(emailSettings);
-
             services.AddSingleton(emailSettings);
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IEmailServices, EmailServices>();
             services.AddScoped<IAuthenticationServices, AuthenticationServices>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserServices, UserServices>();
+            services.AddScoped<IBiddingRoomRepository, BiddingRoomRepository>();
+            services.AddScoped<IBiddingRoomService, BiddingRoomService>();
             services.AddIdentity<AppUser, IdentityRole>()
             .AddEntityFrameworkStores<HAuctionDBContext>()
             .AddDefaultTokenProviders();

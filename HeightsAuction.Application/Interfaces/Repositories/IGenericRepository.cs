@@ -10,7 +10,6 @@ namespace HeightsAuction.Application.Interfaces.Repositories
         Task AddAsync(T entity);
         void Update(T entity);
         void DeleteAsync(T entity);
-        void DeleteAllAsync(List<T> entities);
         void SaveChangesAsync();
         Task<bool> ExistsAsync(Expression<Func<T, bool>> expression);
     }

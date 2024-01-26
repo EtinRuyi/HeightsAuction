@@ -9,5 +9,6 @@
         IBidNotification Notifications { get; }
         IUserRepository Users { get; }
         Task<int> SaveChangesAsync();
+        void Dispose();
     }
 }
