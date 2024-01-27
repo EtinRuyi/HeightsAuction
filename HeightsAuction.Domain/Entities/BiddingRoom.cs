@@ -5,6 +5,7 @@ namespace HeightsAuction.Domain.Entities
     public class BiddingRoom : BaseEntity
     {
         public string Title { get; set; }
+        public string ItemId { get; set; }
         public Item Item { get; set; }
         public string WinningBidId { get; set; }
         public Bid WinningBid { get; set; }
