@@ -23,6 +23,8 @@ namespace HeightsAuction.API.Mapper
                 .ForMember(dest => dest.Bidders, opt => opt.MapFrom(src => src.Bidders))
                 .ReverseMap();
             CreateMap<BiddingRoom, CreateRoomResponseDto>().ReverseMap();
+            CreateMap<Bid, AddBidResponseDto>().ReverseMap();
+            CreateMap<AddBidRequestDto, Bid>();
         }
     }
 }

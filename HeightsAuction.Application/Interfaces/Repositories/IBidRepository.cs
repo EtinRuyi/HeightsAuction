@@ -5,11 +5,8 @@ namespace HeightsAuction.Application.Interfaces.Repositories
 {
     public interface IBidRepository : IGenericRepository<Bid>
     {
-        Task<List<Bid>> GetAllBidsAsync();
-        //Task<List<Bid>> GetBidByBiddingRoomIdAsync();
         Task AddBidAsync(Bid bid);
-        Task DeleteBidAsync(Bid bid);
-        void UpdateBidAsync(Bid bid);
+        Task GetWinningBidByRoomId(Expression<Func<Bid, bool>> condition);
         Task<List<Bid>> FindBids(Expression<Func<Bid, bool>> expression);
     }
 }

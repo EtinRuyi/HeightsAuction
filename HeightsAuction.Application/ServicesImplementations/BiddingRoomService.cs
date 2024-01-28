@@ -95,7 +95,7 @@ namespace HeightsAuction.Application.ServicesImplementations
         {
             try
             {
-                var biddingRoom = await _unitOfWork.BiddingRooms.GetByIdAsync(roomId);
+                var biddingRoom = await _unitOfWork.BiddingRooms.GetRoomByIdAsync(roomId);
 
                 if (biddingRoom == null)
                 {
@@ -125,7 +125,7 @@ namespace HeightsAuction.Application.ServicesImplementations
                     return ApiResponse<JoinRoomResponseDto>.Failed(false, "User does not exist", 404, new List<string> { });
                 }
 
-                var biddingRoom = await _unitOfWork.BiddingRooms.GetByIdAsync(roomId);
+                var biddingRoom = await _unitOfWork.BiddingRooms.GetRoomByIdAsync(roomId);
                 if (biddingRoom == null)
                 {
                     return ApiResponse<JoinRoomResponseDto>.Failed(false, "Bidding room does not exist", 404, new List<string> { });
