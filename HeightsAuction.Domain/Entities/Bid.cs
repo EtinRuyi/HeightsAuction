@@ -10,7 +10,7 @@ namespace HeightsAuction.Domain.Entities
         public string BiddingRoomId { get; set; }
         public BiddingRoom BiddingRoom { get; set; }
         public string UserId { get; set; }
-        public AppUser AppUser { get; set; }
+        public ICollection<AppUser> UserBids { get; set; }
         public bool IsHeighestBid { get; set; }
         public DateTime BidTime { get; set; }
     }

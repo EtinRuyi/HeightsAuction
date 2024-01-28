@@ -7,6 +7,5 @@ namespace HeightsAuction.Application.Interfaces.Services
     {
         Task<ApiResponse<AddBidResponseDto>> AddBidAsync(string userId, AddBidRequestDto requestDto);
         Task<ApiResponse<AddBidResponseDto>> GetWinningBidFromRoom(string roomId);
-
     }
 }
