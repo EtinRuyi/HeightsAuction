@@ -8,9 +8,6 @@ namespace HeightsAuction.Persistence.Repositories
     {
         public UserRepository(HAuctionDBContext context) : base(context) { }
 
-        public async Task<List<AppUser>> GetUsersAsync()
-        {
-            return await GetAllAsync();
-        }
+        public async Task<List<AppUser>> GetUsersAsync() => await GetAllAsync();
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace HeightsAuction.Application.Interfaces.Repositories
 {
-    public interface IUnitOfWork : IDisposable
+    public interface IUnitOfWork
     {
         IBiddingRoomRepository BiddingRooms { get; }
         IBidRepository Bids { get; }

@@ -1,5 +1,4 @@
 ﻿using HeightsAuction.Application.Interfaces.Repositories;
-using HeightsAuction.Domain.Entities;
 using HeightsAuction.Persistence.AppContext;
 
 namespace HeightsAuction.Persistence.Repositories
@@ -16,7 +15,7 @@ namespace HeightsAuction.Persistence.Repositories
             Invoices = new InvoiceRepository(_dbContext);
             Payments = new PaymentRepository(_dbContext);
             Users = new UserRepository(_dbContext);
-            Notifications = new BidNotification(_dbContext);
+            Notifications = new BidNotificationRepository(_dbContext);
         }
 
         public IBiddingRoomRepository BiddingRooms { get; private set; }
@@ -26,10 +25,7 @@ namespace HeightsAuction.Persistence.Repositories
         public IBidNotification Notifications { get; private set; }
         public IUserRepository Users { get; private set; }
 
-        public void Dispose()
-        {
-            _dbContext.Dispose();
-        }
+        public void Dispose() => _dbContext.Dispose();
 
         public async Task<int> SaveChangesAsync() => await _dbContext.SaveChangesAsync();
     }
