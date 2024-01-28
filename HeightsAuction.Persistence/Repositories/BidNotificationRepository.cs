@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using HeightsAuction.Application.Interfaces.Repositories;
+using HeightsAuction.Domain.Entities;
+using HeightsAuction.Persistence.AppContext;
 
 namespace HeightsAuction.Persistence.Repositories
 {
-    public class BidNotificationRepository
+
+    public class BidNotificationRepository : GenericRepository<BidNotification>, IBidNotification
     {
+        public BidNotificationRepository(HAuctionDBContext context) : base(context) { }
+        public async Task CreateNotificationAsync(BidNotification notification) => await AddAsync(notification);
     }
 }

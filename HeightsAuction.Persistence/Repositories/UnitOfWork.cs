@@ -15,8 +15,8 @@ namespace HeightsAuction.Persistence.Repositories
             Bids = new BidRepository(_dbContext);
             Invoices = new InvoiceRepository(_dbContext);
             Payments = new PaymentRepository(_dbContext);
-            Notifications = new BidNotification(_dbContext);
             Users = new UserRepository(_dbContext);
+            Notifications = new BidNotification(_dbContext);
         }
 
         public IBiddingRoomRepository BiddingRooms { get; private set; }
