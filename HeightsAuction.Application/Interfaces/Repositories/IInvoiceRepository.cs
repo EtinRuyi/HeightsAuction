@@ -1,5 +1,4 @@
 ﻿using HeightsAuction.Domain.Entities;
-using System.Linq.Expressions;
 
 namespace HeightsAuction.Application.Interfaces.Repositories
 {
