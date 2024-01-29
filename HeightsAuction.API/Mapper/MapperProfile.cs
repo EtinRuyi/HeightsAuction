@@ -27,6 +27,9 @@ namespace HeightsAuction.API.Mapper
             CreateMap<AddBidRequestDto, Bid>();
             CreateMap<GenerateInvoiceRequestDto, Invoice>();
             CreateMap<Invoice, GenerateInvoiceResponseDto>().ReverseMap();
+            CreateMap<BidNotificationRequestDto, BidNotification>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore());
+            CreateMap<BidNotification, BidNotificationResponseDto>();
         }
     }
 }
