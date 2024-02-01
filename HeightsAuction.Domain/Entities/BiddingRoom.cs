@@ -9,7 +9,7 @@ namespace HeightsAuction.Domain.Entities
         public Item Item { get; set; }
         public string WinningBidId { get; set; }
         public Bid WinningBid { get; set; }
-        public List<Bid> Bids { get; set; } = new List<Bid>();
+        public ICollection<Bid> Bids { get; set; } = new List<Bid>();
         public ICollection<AppUser> Bidders { get; set; } = new List<AppUser>();
         public DateTime? AuctionStartDate { get; set; }
         public DateTime? AuctionEndDate { get; set; }
