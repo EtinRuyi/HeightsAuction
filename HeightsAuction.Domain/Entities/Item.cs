@@ -8,5 +8,6 @@ namespace HeightsAuction.Domain.Entities
         public string Description { get; set; }
         public decimal StartingPrice { get; set; }
         public decimal CurrentBidPrice { get; set; }
+        public ICollection<Bid> Bids { get; set; } = new List<Bid>();
     }
 }

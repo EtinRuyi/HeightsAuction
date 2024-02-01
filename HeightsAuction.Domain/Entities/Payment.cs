@@ -6,8 +6,9 @@ namespace HeightsAuction.Domain.Entities
 {
     public class Payment : BaseEntity
     {
+        [ForeignKey("InvoiceId")]
         public string InvoiceId { get; set; }
-        public Invoice Invoice { get; set; }
+        //public Invoice Invoice { get; set; }
         public decimal Amount { get; set; }
         public PaymentStatus PaymentStatus { get; set; }
         public PaymentMethod PaymentMethod { get; set; }

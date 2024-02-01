@@ -30,9 +30,6 @@ namespace HeightsAuction.Persistence.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("BidId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("BiddingRoomId")
                         .HasColumnType("nvarchar(450)");
 
@@ -102,8 +99,6 @@ namespace HeightsAuction.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BidId");
-
                     b.HasIndex("BiddingRoomId");
 
                     b.HasIndex("NormalizedEmail")
@@ -148,7 +143,7 @@ namespace HeightsAuction.Persistence.Migrations
 
                     b.Property<string>("ItemId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -165,6 +160,8 @@ namespace HeightsAuction.Persistence.Migrations
 
                     b.HasIndex("BiddingRoomId");
 
+                    b.HasIndex("ItemId");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("Bids");
@@ -178,11 +175,11 @@ namespace HeightsAuction.Persistence.Migrations
 
                     b.Property<string>("BidderId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("BiddingRoomId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -212,10 +209,6 @@ namespace HeightsAuction.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BidderId");
-
-                    b.HasIndex("BiddingRoomId");
 
                     b.ToTable("BidNotifications");
                 });
@@ -264,14 +257,9 @@ namespace HeightsAuction.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("WinningBidId1")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ItemId");
-
-                    b.HasIndex("WinningBidId1");
 
                     b.ToTable("BiddingRooms");
                 });
@@ -282,12 +270,9 @@ namespace HeightsAuction.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("AppUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("BiddingRoomId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -312,15 +297,9 @@ namespace HeightsAuction.Persistence.Migrations
 
                     b.Property<string>("WinningBidId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AppUserId");
-
-                    b.HasIndex("BiddingRoomId");
-
-                    b.HasIndex("WinningBidId");
 
                     b.ToTable("Invoices");
                 });
@@ -552,10 +531,6 @@ namespace HeightsAuction.Persistence.Migrations
 
             modelBuilder.Entity("HeightsAuction.Domain.Entities.AppUser", b =>
                 {
-                    b.HasOne("HeightsAuction.Domain.Entities.Bid", null)
-                        .WithMany("UserBids")
-                        .HasForeignKey("BidId");
-
                     b.HasOne("HeightsAuction.Domain.Entities.BiddingRoom", null)
                         .WithMany("Bidders")
                         .HasForeignKey("BiddingRoomId");
@@ -569,32 +544,21 @@ namespace HeightsAuction.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("HeightsAuction.Domain.Entities.Item", "Item")
+                        .WithMany("Bids")
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("HeightsAuction.Domain.Entities.AppUser", "User")
                         .WithMany("Bids")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.Navigation("Item");
+
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("HeightsAuction.Domain.Entities.BidNotification", b =>
-                {
-                    b.HasOne("HeightsAuction.Domain.Entities.AppUser", "Bidder")
-                        .WithMany()
-                        .HasForeignKey("BidderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HeightsAuction.Domain.Entities.BiddingRoom", "BiddingRoom")
-                        .WithMany()
-                        .HasForeignKey("BiddingRoomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Bidder");
-
-                    b.Navigation("BiddingRoom");
                 });
 
             modelBuilder.Entity("HeightsAuction.Domain.Entities.BiddingRoom", b =>
@@ -605,49 +569,16 @@ namespace HeightsAuction.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HeightsAuction.Domain.Entities.Bid", "WinningBid")
-                        .WithMany()
-                        .HasForeignKey("WinningBidId1");
-
                     b.Navigation("Item");
-
-                    b.Navigation("WinningBid");
-                });
-
-            modelBuilder.Entity("HeightsAuction.Domain.Entities.Invoice", b =>
-                {
-                    b.HasOne("HeightsAuction.Domain.Entities.AppUser", "AppUser")
-                        .WithMany()
-                        .HasForeignKey("AppUserId");
-
-                    b.HasOne("HeightsAuction.Domain.Entities.BiddingRoom", "BiddingRoom")
-                        .WithMany()
-                        .HasForeignKey("BiddingRoomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HeightsAuction.Domain.Entities.Bid", "WinningBid")
-                        .WithMany()
-                        .HasForeignKey("WinningBidId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AppUser");
-
-                    b.Navigation("BiddingRoom");
-
-                    b.Navigation("WinningBid");
                 });
 
             modelBuilder.Entity("HeightsAuction.Domain.Entities.Payment", b =>
                 {
-                    b.HasOne("HeightsAuction.Domain.Entities.Invoice", "Invoice")
+                    b.HasOne("HeightsAuction.Domain.Entities.Invoice", null)
                         .WithMany("Payments")
                         .HasForeignKey("InvoiceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Invoice");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -706,11 +637,6 @@ namespace HeightsAuction.Persistence.Migrations
                     b.Navigation("Bids");
                 });
 
-            modelBuilder.Entity("HeightsAuction.Domain.Entities.Bid", b =>
-                {
-                    b.Navigation("UserBids");
-                });
-
             modelBuilder.Entity("HeightsAuction.Domain.Entities.BiddingRoom", b =>
                 {
                     b.Navigation("Bidders");
@@ -721,6 +647,11 @@ namespace HeightsAuction.Persistence.Migrations
             modelBuilder.Entity("HeightsAuction.Domain.Entities.Invoice", b =>
                 {
                     b.Navigation("Payments");
+                });
+
+            modelBuilder.Entity("HeightsAuction.Domain.Entities.Item", b =>
+                {
+                    b.Navigation("Bids");
                 });
 #pragma warning restore 612, 618
         }

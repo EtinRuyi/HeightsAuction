@@ -24,6 +24,11 @@ namespace HeightsAuction.Persistence.AppContext
                 .WithMany(u => u.Bids)
                 .HasForeignKey(b => b.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Bid>()
+                .HasOne(b => b.Item)
+                .WithMany(i => i.Bids)
+                .HasForeignKey(b => b.ItemId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
