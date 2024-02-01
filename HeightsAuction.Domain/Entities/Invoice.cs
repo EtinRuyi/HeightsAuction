@@ -7,13 +7,10 @@ namespace HeightsAuction.Domain.Entities
     {
         [ForeignKey("BiddingRoomId")]
         public string BiddingRoomId { get; set; }
-        //public BiddingRoom BiddingRoom { get; set; }
         [ForeignKey("AppUserId")]
         public string UserId { get; set; }
-        //public AppUser AppUser { get; set; }
         [ForeignKey("BidId")]
         public string WinningBidId { get; set; }
-        //public Bid WinningBid { get; set; }
         public List<Payment> Payments { get; set; } = new List<Payment>();
     }
 }
