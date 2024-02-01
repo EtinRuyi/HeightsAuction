@@ -25,13 +25,9 @@ namespace HeightsAuction.Persistence.ServiceExtension
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IEmailServices, EmailServices>();
             services.AddScoped<IAuthenticationServices, AuthenticationServices>();
-            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserServices, UserServices>();
-            services.AddScoped<IBiddingRoomRepository, BiddingRoomRepository>();
             services.AddScoped<IBiddingRoomService, BiddingRoomService>();
-            services.AddScoped<IBidRepository, BidRepository>();
             services.AddScoped<IBiddingService, BiddingService>();
-            services.AddScoped<IInvoiceRepository, InvoiceRepository>();
             services.AddScoped<IInvoiceService, InvoiceService>();
             services.AddIdentity<AppUser, IdentityRole>()
             .AddEntityFrameworkStores<HAuctionDBContext>()
