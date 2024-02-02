@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using HeightsAuction.Application.DTOs;
+using HeightsAuction.Application.Interfaces.Repositories;
 using HeightsAuction.Application.Interfaces.Services;
 using HeightsAuction.Domain;
 using HeightsAuction.Domain.Entities;
@@ -21,12 +22,14 @@ namespace HeightsAuction.Application.ServicesImplementations
         private readonly ILogger<AuthenticationServices> _logger;
         private readonly IConfiguration _config;
         private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
 
         public AuthenticationServices(UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
             ILogger<AuthenticationServices> logger,
             IConfiguration config,
-            IMapper mapper
+            IMapper mapper,
+            IUnitOfWork unitOfWork
             )
         {
             _userManager = userManager;
@@ -34,6 +37,7 @@ namespace HeightsAuction.Application.ServicesImplementations
             _logger = logger;
             _config = config;
             _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<ApiResponse<LoginResponseDto>> LoginAsync(LoginRequestDto loginRequest)
@@ -89,34 +93,19 @@ namespace HeightsAuction.Application.ServicesImplementations
                 {
                     return ApiResponse<RegisterResponseDto>.Failed(false, "User with this email already exists.", StatusCodes.Status400BadRequest, new List<string>());
                 }
-
+                var normalizedEmail = registerRequest.Email.ToUpper();
                 var appUser = _mapper.Map<AppUser>(registerRequest);
-                //var appUser = new AppUser()
-                //{
-                //    FirstName = registerRequest.FirstName,
-                //    LastName = registerRequest.LastName,
-                //    Email = registerRequest.Email,
-                //    PhoneNumber = registerRequest.PhoneNumber,
-                //    UserName = registerRequest.Email
-                //};
-
+                appUser.NormalizedEmail = normalizedEmail;
                 var result = await _userManager.CreateAsync(appUser, registerRequest.Password);
                 if (result.Succeeded)
                 {
                     await _userManager.AddToRoleAsync(appUser, "User");
                 }
-
+                await _unitOfWork.Users.AddAsync(appUser);
+                await _unitOfWork.SaveChangesAsync();
                 var response = _mapper.Map<RegisterResponseDto>(appUser);
-                //var response = new RegisterResponseDto
-                //{
-                //    Id = appUser.Id,
-                //    Email = appUser.Email,
-                //    PhoneNumber = appUser.PhoneNumber,
-                //    FirstName = appUser.FirstName,
-                //    LastName = appUser.LastName,
-                //};
 
-                return ApiResponse<RegisterResponseDto>.Success(response, "User registered successfully. Please click on the link sent to your email to confirm your account", StatusCodes.Status201Created);
+                return ApiResponse<RegisterResponseDto>.Success(response, "User registered successfully.", StatusCodes.Status201Created);
             }
             catch (Exception ex)
             {
