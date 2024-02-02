@@ -11,9 +11,9 @@ namespace HeightsAuction.Common.Utilities
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var userManager = serviceProvider.GetRequiredService<UserManager<AppUser>>();
 
-            if (!await roleManager.RoleExistsAsync("SuperAdmin"))
+            if (!await roleManager.RoleExistsAsync("Admin"))
             {
-                var role = new IdentityRole("SuperAdmin");
+                var role = new IdentityRole("Admin");
                 await roleManager.CreateAsync(role);
             }
 
@@ -31,6 +31,7 @@ namespace HeightsAuction.Common.Utilities
                     Email = "admin@gmail.com",
                     EmailConfirmed = true,
                     FirstName = "Admin",
+                    LastName = "Admin",
                     CreatedAt = DateTime.UtcNow
                 };
 
@@ -38,7 +39,7 @@ namespace HeightsAuction.Common.Utilities
 
                 if (result.Succeeded)
                 {
-                    userManager.AddToRoleAsync(user, "SuperAdmin").Wait();
+                    userManager.AddToRoleAsync(user, "Admin").Wait();
                 }
             }
         }

@@ -15,16 +15,9 @@ var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentCla
 try
 {
     // Add services to the container.
-
-    builder.Services.AddControllers();
-    builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
-
-    // Register SaviThrift services using the extension class
     builder.Services.AddDependencies(configuration);
     builder.Services.AddMailService(configuration);
     builder.Services.AddControllers();
-    // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
     builder.Services.AddAuthentication();
