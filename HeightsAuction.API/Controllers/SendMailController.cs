@@ -1,6 +1,5 @@
 ﻿using HeightsAuction.Application.Interfaces.Services;
 using HeightsAuction.Domain.Entities.Helper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HeightsAuction.API.Controllers
