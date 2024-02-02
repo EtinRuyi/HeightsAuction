@@ -2,9 +2,11 @@
 using HeightsAuction.Application.DTOs;
 using HeightsAuction.Application.Interfaces.Repositories;
 using HeightsAuction.Application.Interfaces.Services;
+using HeightsAuction.Common.Utilities;
 using HeightsAuction.Domain;
 using HeightsAuction.Domain.Entities;
 using Microsoft.Extensions.Logging;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HeightsAuction.Application.ServicesImplementations
 {
@@ -22,8 +24,6 @@ namespace HeightsAuction.Application.ServicesImplementations
             _logger = logger;
         }
 
-        //TODO: An ITEM should be created during room creation. This is helpful when a user wants to place a bid, to include the ItemId
-        // Updated BiddingRoomService
         public async Task<ApiResponse<CreateRoomResponseDto>> CreateBiddingRoomAsync(CreateRoomRequestDto requestDto)
         {
             try
@@ -51,6 +51,7 @@ namespace HeightsAuction.Application.ServicesImplementations
                 };
 
                 await _unitOfWork.BiddingRooms.CreateRoomAsync(biddingRoom);
+                await _unitOfWork.BiddingRooms.AddAsync(biddingRoom);
                 await _unitOfWork.SaveChangesAsync();
 
                 var responseDto = _mapper.Map<CreateRoomResponseDto>(biddingRoom);
@@ -60,8 +61,35 @@ namespace HeightsAuction.Application.ServicesImplementations
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error occurred while adding a board: {ex}");
-                return ApiResponse<CreateRoomResponseDto>.Failed(false, "Error occurred while adding a board", 500, new List<string> { });
+                _logger.LogError($"Error occurred while creating Bidding room: {ex}");
+                return ApiResponse<CreateRoomResponseDto>.Failed(false, "Error occurred while creating Bidding room", 500, new List<string> { });
+            }
+        }
+
+        public async Task<ApiResponse<PageResult<IEnumerable<BiddingRoomDto>>>> GetAllBiddingRoomsAsync(int page, int perPage)
+        {
+            try
+            {
+                var allRooms = await _unitOfWork.BiddingRooms.GetAllRoomssAsync();
+                if (allRooms == null)
+                {
+                    return ApiResponse<PageResult<IEnumerable<BiddingRoomDto>>>.Failed(false, $"No Bidding Room found", 404, new List<string>());
+                }
+                var pagedRooms = await Pagination<BiddingRoom>.GetPager(
+                    allRooms,
+                    perPage,
+                    page,
+                    biddingRoom => biddingRoom.Title,
+                    biddingRoom => biddingRoom.Id.ToString());
+                var pagedRoomDtos = _mapper.Map<PageResult<IEnumerable<BiddingRoomDto>>>(pagedRooms);
+
+                return ApiResponse<PageResult<IEnumerable<BiddingRoomDto>>>.Success(pagedRoomDtos, "Rooms fouund.", 200);
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex, "An error occurred while retrieving rooms by pagination. Page: { Page}, PerPage: { PerPage} ", page, perPage);
+                return ApiResponse<PageResult<IEnumerable<BiddingRoomDto>>>.Failed(false, "An error occurred while retrieving rooms by pagination.", 500, new List<string> { ex.Message });
             }
         }
 

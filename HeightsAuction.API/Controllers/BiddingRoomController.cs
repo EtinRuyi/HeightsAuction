@@ -31,5 +31,11 @@ namespace HeightsAuction.API.Controllers
         {
             return Ok(await _biddingRoomService.GetBiddingRoomByIdAsync(roomId));
         }
+
+        [HttpGet("Get-All-BiddingRooms")]
+        public async Task<IActionResult>GetAllBiddingRooms(int page, int perPage)
+        {
+            return Ok(await _biddingRoomService.GetAllBiddingRoomsAsync(page, perPage));
+        }
     }
 }

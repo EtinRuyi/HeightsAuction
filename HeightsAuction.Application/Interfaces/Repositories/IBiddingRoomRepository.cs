@@ -9,7 +9,5 @@ namespace HeightsAuction.Application.Interfaces.Repositories
         Task<List<BiddingRoom>> GetAllRoomssAsync();
         Task<List<BiddingRoom>> FindRooms(Expression<Func<BiddingRoom, bool>> expression);
         Task CreateRoomAsync(BiddingRoom biddingRoom);
-        //Task<List<BiddingRoom>> ActiveAuctionsAsync();
-        //Task<BiddingRoom> GetBiddingRoomWinnerAsync(Expression<Func<BiddingRoom, bool>> expression);
     }
 }

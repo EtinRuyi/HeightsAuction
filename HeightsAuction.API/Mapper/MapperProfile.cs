@@ -15,6 +15,12 @@ namespace HeightsAuction.API.Mapper
             CreateMap<LoginRequestDto, AppUser>();
             CreateMap<CreateRoomRequestDto, BiddingRoom>();
             CreateMap<BiddingRoom, CreateRoomResponseDto>().ReverseMap();
+            CreateMap<PageResult<IEnumerable<BiddingRoom>>, PageResult<IEnumerable<BiddingRoomDto>>>();
+            //.ForMember(dest => dest.Results, opt => opt.MapFrom(src => src.Results));
+
+            CreateMap<BiddingRoom, BiddingRoomDto>()
+                .ForMember(dest => dest.Bidders, opt => opt.MapFrom(src => src.Bidders))
+                .ReverseMap();
             CreateMap<PageResult<IEnumerable<AppUser>>, PageResult<IEnumerable<RegisterResponseDto>>>();
             CreateMap<BiddingRoom, BiddingRoomDto>()
                 .ForMember(dest => dest.Bidders, opt => opt.MapFrom(src => src.Bidders))
