@@ -24,45 +24,43 @@ namespace HeightsAuction.Application.ServicesImplementations
             _logger = logger;
         }
 
-        public async Task<ApiResponse<CreateRoomResponseDto>> CreateBiddingRoomAsync(CreateRoomRequestDto requestDto)
+        public async Task<ApiResponse<CreateRoomResponseDto>> CreateBiddingRoomAsync(string userId, CreateRoomRequestDto requestDto)
         {
             try
             {
-                var existingRoom = await _unitOfWork.BiddingRooms.FindRooms(b => b.Title == requestDto.Title);
-                if (existingRoom != null)
+                var existingUser = await _unitOfWork.Users.GetByIdAsync(userId);
+                if (existingUser == null)
                 {
-                    return ApiResponse<CreateRoomResponseDto>.Failed(false, "Bidding room with the same name already exists", 400, new List<string> { });
+                    return ApiResponse<CreateRoomResponseDto>.Failed(false, "User does not exist", 404, new List<string> { });
                 }
-
-                var item = new Item
+                var existingBidRoom = await _unitOfWork.BiddingRooms.FindAsync(room => room.Title == requestDto.Title);
+                if (existingBidRoom.Any())
                 {
-                    Name = requestDto.ItemName,
-                    Description = requestDto.ItemDescription,
-                    StartingPrice = requestDto.ItemStartingPrice,
-                    CurrentBidPrice = requestDto.ItemStartingPrice
-                };
+                    return ApiResponse<CreateRoomResponseDto>.Failed(false, "Bidding Room with the same title already exists", 404, new List<string> { });
+                }
+                //var biddingRoom = new BiddingRoom
+                //{
+                //    Title = requestDto.Title,
+                //    AuctionStartDate = requestDto.AuctionStartDate,
+                //    AuctionEndDate = requestDto.AuctionEndDate,
+                //};
+                var biddingRoom = _mapper.Map<BiddingRoom>(requestDto);
+                biddingRoom.CreatedBy = userId;
 
-                var biddingRoom = new BiddingRoom
-                {
-                    Title = requestDto.Title,
-                    Item = item,
-                    AuctionStartDate = requestDto.AuctionStartDate,
-                    AuctionEndDate = requestDto.AuctionEndDate,
-                };
+                // Add the user as a bidder
+                biddingRoom.Bidders.Add(existingUser);
 
-                await _unitOfWork.BiddingRooms.CreateRoomAsync(biddingRoom);
                 await _unitOfWork.BiddingRooms.AddAsync(biddingRoom);
                 await _unitOfWork.SaveChangesAsync();
 
                 var responseDto = _mapper.Map<CreateRoomResponseDto>(biddingRoom);
-                responseDto.ItemId = item.Id; 
-
-                return ApiResponse<CreateRoomResponseDto>.Success(responseDto, "Bidding room created successfully", 201);
+                return ApiResponse<CreateRoomResponseDto>.Success(responseDto, "Bidding Room created successfully", 200);
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error occurred while creating Bidding room: {ex}");
-                return ApiResponse<CreateRoomResponseDto>.Failed(false, "Error occurred while creating Bidding room", 500, new List<string> { });
+
+                _logger.LogError($"Error occurred while creating Bidding Room: {ex}");
+                return ApiResponse<CreateRoomResponseDto>.Failed(false, "Error occurred while creating Bidding Room", 500, new List<string> { });
             }
         }
 
@@ -92,32 +90,6 @@ namespace HeightsAuction.Application.ServicesImplementations
                 return ApiResponse<PageResult<IEnumerable<BiddingRoomDto>>>.Failed(false, "An error occurred while retrieving rooms by pagination.", 500, new List<string> { ex.Message });
             }
         }
-
-
-        //public async Task<ApiResponse<CreateRoomResponseDto>> CreateBiddingRoomAsync(CreateRoomRequestDto requestDto)
-        //{
-        //    try
-        //    {
-        //        var existingroom = await _unitOfWork.BiddingRooms.FindRooms(b => b.Title == requestDto.Title);
-        //        if (existingroom != null)
-        //        {
-        //            return ApiResponse<CreateRoomResponseDto>.Failed(false, "Bidding room with the same name already exists", 400, new List<string> { });
-        //        }
-
-        //        var biddingRoom = _mapper.Map<BiddingRoom>(requestDto);
-        //        await _unitOfWork.BiddingRooms.CreateRoomAsync(biddingRoom);
-        //        await _unitOfWork.SaveChangesAsync();
-
-        //        var responseDto = _mapper.Map<CreateRoomResponseDto>(biddingRoom);
-
-        //        return ApiResponse<CreateRoomResponseDto>.Success(responseDto, "Bidding room created successfully", 201);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError($"Error occurred while adding a board: {ex}");
-        //        return ApiResponse<CreateRoomResponseDto>.Failed(false, "Error occurred while adding a board", 500, new List<string> { });
-        //    }
-        //}
 
         public async Task<ApiResponse<BiddingRoomDto>> GetBiddingRoomByIdAsync(string roomId)
         {
@@ -164,11 +136,6 @@ namespace HeightsAuction.Application.ServicesImplementations
                     biddingRoom.HasFinished = true;
                     return ApiResponse<JoinRoomResponseDto>.Failed(false, "Bidding room has closed", 400, new List<string> { });
                 }
-
-                //if (biddingRoom.HasFinished || biddingRoom.AuctionEndDate <= DateTime.UtcNow)
-                //{
-                //    return ApiResponse<JoinRoomResponseDto>.Failed(false, "Bidding room has closed", 400, new List<string> { });
-                //}
 
                 biddingRoom.Bidders.Add(existingUser);
                 _unitOfWork.BiddingRooms.Update(biddingRoom);

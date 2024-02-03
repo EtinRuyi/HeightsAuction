@@ -15,20 +15,20 @@ namespace HeightsAuction.Persistence.AppContext
         public DbSet<Payment> Payments { get; set; }
         public DbSet<BidNotification> BidNotifications { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Bid>()
-                .HasOne(b => b.User)
-                .WithMany(u => u.Bids)
-                .HasForeignKey(b => b.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
-            modelBuilder.Entity<Bid>()
-                .HasOne(b => b.Item)
-                .WithMany(i => i.Bids)
-                .HasForeignKey(b => b.ItemId)
-                .OnDelete(DeleteBehavior.Restrict);
-        }
+        //    modelBuilder.Entity<Bid>()
+        //        .HasOne(b => b.User)
+        //        .WithMany(u => u.Bids)
+        //        .HasForeignKey(b => b.UserId)
+        //        .OnDelete(DeleteBehavior.Restrict);
+        //    modelBuilder.Entity<Bid>()
+        //        .HasOne(b => b.Item)
+        //        .WithMany(i => i.Bids)
+        //        .HasForeignKey(b => b.ItemId)
+        //        .OnDelete(DeleteBehavior.Restrict);
+        //}
     }
 }

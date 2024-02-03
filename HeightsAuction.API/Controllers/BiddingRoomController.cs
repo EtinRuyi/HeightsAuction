@@ -15,9 +15,9 @@ namespace HeightsAuction.API.Controllers
         }
 
         [HttpPost("Create-Bidding-Room")]
-        public async Task<IActionResult>CreateBiddingRoomAsyc([FromBody] CreateRoomRequestDto requestDto)
+        public async Task<IActionResult>CreateBiddingRoomAsyc(string userId, [FromBody] CreateRoomRequestDto requestDto)
         {
-            return Ok(await _biddingRoomService.CreateBiddingRoomAsync(requestDto));
+            return Ok(await _biddingRoomService.CreateBiddingRoomAsync(userId, requestDto));
         }
 
         [HttpPost("Join-Bidding-Room")]

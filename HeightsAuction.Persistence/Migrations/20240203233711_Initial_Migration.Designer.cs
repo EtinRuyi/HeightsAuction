@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HeightsAuction.Persistence.Migrations
 {
     [DbContext(typeof(HAuctionDBContext))]
-    [Migration("20240201231841_Initial_Migration")]
+    [Migration("20240203233711_Initial_Migration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -124,6 +124,9 @@ namespace HeightsAuction.Persistence.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<DateTime>("BidTime")
                         .HasColumnType("datetime2");
 
@@ -157,15 +160,15 @@ namespace HeightsAuction.Persistence.Migrations
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
 
                     b.HasIndex("BiddingRoomId");
 
                     b.HasIndex("ItemId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Bids");
                 });
@@ -243,7 +246,7 @@ namespace HeightsAuction.Persistence.Migrations
 
                     b.Property<string>("ItemId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -256,13 +259,15 @@ namespace HeightsAuction.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("WinningBidId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ItemId");
 
                     b.ToTable("BiddingRooms");
                 });
@@ -313,6 +318,10 @@ namespace HeightsAuction.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("BiddingRoomId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -341,6 +350,10 @@ namespace HeightsAuction.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -541,38 +554,21 @@ namespace HeightsAuction.Persistence.Migrations
 
             modelBuilder.Entity("HeightsAuction.Domain.Entities.Bid", b =>
                 {
+                    b.HasOne("HeightsAuction.Domain.Entities.AppUser", null)
+                        .WithMany("Bids")
+                        .HasForeignKey("AppUserId");
+
                     b.HasOne("HeightsAuction.Domain.Entities.BiddingRoom", null)
                         .WithMany("Bids")
                         .HasForeignKey("BiddingRoomId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HeightsAuction.Domain.Entities.Item", "Item")
+                    b.HasOne("HeightsAuction.Domain.Entities.Item", null)
                         .WithMany("Bids")
-                        .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("HeightsAuction.Domain.Entities.AppUser", "User")
-                        .WithMany("Bids")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Item");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("HeightsAuction.Domain.Entities.BiddingRoom", b =>
-                {
-                    b.HasOne("HeightsAuction.Domain.Entities.Item", "Item")
-                        .WithMany()
                         .HasForeignKey("ItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Item");
                 });
 
             modelBuilder.Entity("HeightsAuction.Domain.Entities.Payment", b =>

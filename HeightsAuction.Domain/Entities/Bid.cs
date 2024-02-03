@@ -8,10 +8,10 @@ namespace HeightsAuction.Domain.Entities
         public decimal Amount { get; set; }
         [ForeignKey("ItemId")]
         public string ItemId { get; set; } 
-        public Item Item { get; set; }
+        [ForeignKey("BiddingRoomId")]
         public string BiddingRoomId { get; set; }
+        [ForeignKey("UserId")]
         public string UserId { get; set; }
-        public AppUser User { get; set; }
         public bool IsHeighestBid { get; set; }
         public DateTime BidTime { get; set; }
     }

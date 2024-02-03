@@ -7,6 +7,5 @@
         public string ItemId { get; set; }
         public DateTime? AuctionStartDate { get; set; }
         public DateTime? AuctionEndDate { get; set; }
-        public bool HasFinished { get; set; }
     }
 }
