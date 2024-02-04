@@ -4,6 +4,7 @@ using HeightsAuction.Persistence.AppContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HeightsAuction.Persistence.Migrations
 {
     [DbContext(typeof(HAuctionDBContext))]
-    partial class HAuctionDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240204004137_Latest_Migration")]
+    partial class LatestMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

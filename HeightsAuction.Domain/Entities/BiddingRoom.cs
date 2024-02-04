@@ -7,7 +7,8 @@ namespace HeightsAuction.Domain.Entities
     {
         public string Title { get; set; }
         [ForeignKey("ItemId")]
-        public string ItemId { get; set; }
+        public string? ItemId { get; set; }
+        public Item Item { get; set; }
         [ForeignKey("UserId")]
         public string UserId { get; set; }
         [ForeignKey("BidId")]
