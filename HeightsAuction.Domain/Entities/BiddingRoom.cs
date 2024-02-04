@@ -9,10 +9,8 @@ namespace HeightsAuction.Domain.Entities
         [ForeignKey("ItemId")]
         public string? ItemId { get; set; }
         public Item Item { get; set; }
-        [ForeignKey("UserId")]
-        public string UserId { get; set; }
         [ForeignKey("BidId")]
-        public string WinningBidId { get; set; }
+        public string? WinningBidId { get; set; }
         public ICollection<Bid> Bids { get; set; } = new List<Bid>();
         public ICollection<AppUser> Bidders { get; set; } = new List<AppUser>();
         public DateTime? AuctionStartDate { get; set; }
