@@ -58,10 +58,7 @@ namespace HeightsAuction.Application.ServicesImplementations
 
                         var response = _mapper.Map<LoginResponseDto>(existingUser);
                         response.Token = GenerateJwtToken(existingUser, role);
-                        //var response = new LoginResponseDto
-                        //{
-                        //    Token = GenerateJwtToken(existingUser, role)
-                        //};
+                       
                         return ApiResponse<LoginResponseDto>.Success(response, "Logged In Successfully", StatusCodes.Status200OK);
 
                     case { IsLockedOut: true }:
@@ -84,6 +81,35 @@ namespace HeightsAuction.Application.ServicesImplementations
             }
         }
 
+        //public async Task<ApiResponse<RegisterResponseDto>> RegisterAsync(RegisterRequestDto registerRequest)
+        //{
+        //    try
+        //    {
+        //        var existingUser = await _userManager.FindByEmailAsync(registerRequest.Email);
+        //        if (existingUser != null)
+        //        {
+        //            return ApiResponse<RegisterResponseDto>.Failed(false, "User with this email already exists.", StatusCodes.Status400BadRequest, new List<string>());
+        //        }
+
+        //        var appUser = _mapper.Map<AppUser>(registerRequest);
+        //        var result = await _userManager.CreateAsync(appUser, registerRequest.Password);
+        //        if (result.Succeeded)
+        //        {
+        //            await _userManager.AddToRoleAsync(appUser, "User");
+        //        }
+        //        await _unitOfWork.Users.AddAsync(appUser);
+        //        await _unitOfWork.SaveChangesAsync();
+        //        var response = _mapper.Map<RegisterResponseDto>(appUser);
+
+        //        return ApiResponse<RegisterResponseDto>.Success(response, "User registered successfully.", StatusCodes.Status201Created);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex, "Error occurred while adding a manager " + ex.InnerException);
+        //        return ApiResponse<RegisterResponseDto>.Failed(false, "Error creating user.", StatusCodes.Status500InternalServerError, new List<string>() { ex.InnerException.ToString() });
+        //    }
+        //}
+
         public async Task<ApiResponse<RegisterResponseDto>> RegisterAsync(RegisterRequestDto registerRequest)
         {
             try
@@ -93,9 +119,17 @@ namespace HeightsAuction.Application.ServicesImplementations
                 {
                     return ApiResponse<RegisterResponseDto>.Failed(false, "User with this email already exists.", StatusCodes.Status400BadRequest, new List<string>());
                 }
+
+                var userName = registerRequest.Email; // You can customize this logic based on your requirements
+                var normalizedUserName = userName.ToUpper();
                 var normalizedEmail = registerRequest.Email.ToUpper();
+
                 var appUser = _mapper.Map<AppUser>(registerRequest);
+                appUser.UserName = userName;
+                appUser.NormalizedUserName = normalizedUserName;
+                appUser.Email = registerRequest.Email;
                 appUser.NormalizedEmail = normalizedEmail;
+
                 var result = await _userManager.CreateAsync(appUser, registerRequest.Password);
                 if (result.Succeeded)
                 {
@@ -113,6 +147,7 @@ namespace HeightsAuction.Application.ServicesImplementations
                 return ApiResponse<RegisterResponseDto>.Failed(false, "Error creating user.", StatusCodes.Status500InternalServerError, new List<string>() { ex.InnerException.ToString() });
             }
         }
+
 
         private string GenerateJwtToken(AppUser contact, string roles)
         {

@@ -10,6 +10,7 @@ namespace HeightsAuction.Domain.Entities
         public string ItemId { get; set; } 
         [ForeignKey("BiddingRoomId")]
         public string BiddingRoomId { get; set; }
+        public BiddingRoom BiddingRoom { get; set; }
         [ForeignKey("UserId")]
         public string UserId { get; set; }
         public bool IsHeighestBid { get; set; }
