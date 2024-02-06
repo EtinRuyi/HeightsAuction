@@ -17,7 +17,7 @@ namespace HeightsAuction.Persistence.ServiceExtension
         public static void AddDependencies(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<HAuctionDBContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Scoped);
             var emailSettings = new EmailSettings();
             configuration.GetSection("EmailSettings").Bind(emailSettings);
             services.AddSingleton(emailSettings);

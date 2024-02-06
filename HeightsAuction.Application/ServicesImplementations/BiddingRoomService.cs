@@ -6,7 +6,6 @@ using HeightsAuction.Common.Utilities;
 using HeightsAuction.Domain;
 using HeightsAuction.Domain.Entities;
 using Microsoft.Extensions.Logging;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HeightsAuction.Application.ServicesImplementations
 {
@@ -38,22 +37,18 @@ namespace HeightsAuction.Application.ServicesImplementations
                 {
                     return ApiResponse<CreateRoomResponseDto>.Failed(false, "Bidding Room with the same title already exists", 404, new List<string> { });
                 }
-                //var biddingRoom = new BiddingRoom
-                //{
-                //    Title = requestDto.Title,
-                //    AuctionStartDate = requestDto.AuctionStartDate,
-                //    AuctionEndDate = requestDto.AuctionEndDate,
-                //};
+
                 var biddingRoom = _mapper.Map<BiddingRoom>(requestDto);
                 biddingRoom.CreatedBy = userId;
 
                 // Add the user as a bidder
                 biddingRoom.Bidders.Add(existingUser);
-
                 await _unitOfWork.BiddingRooms.AddAsync(biddingRoom);
                 await _unitOfWork.SaveChangesAsync();
 
                 var responseDto = _mapper.Map<CreateRoomResponseDto>(biddingRoom);
+                responseDto.RoomId = biddingRoom.Id;
+                responseDto.CreatedBy = userId;
                 return ApiResponse<CreateRoomResponseDto>.Success(responseDto, "Bidding Room created successfully", 200);
             }
             catch (Exception ex)
@@ -73,19 +68,26 @@ namespace HeightsAuction.Application.ServicesImplementations
                 {
                     return ApiResponse<PageResult<IEnumerable<BiddingRoomDto>>>.Failed(false, $"No Bidding Room found", 404, new List<string>());
                 }
+
+                // Fetch related entities for each room
+                var roomsWithRelatedEntities = new List<BiddingRoom>();
+                foreach (var room in allRooms)
+                {
+                    roomsWithRelatedEntities.Add(await _unitOfWork.BiddingRooms.IncludeRelatedEntities(room));
+                }
+
                 var pagedRooms = await Pagination<BiddingRoom>.GetPager(
-                    allRooms,
+                    roomsWithRelatedEntities,
                     perPage,
                     page,
                     biddingRoom => biddingRoom.Title,
                     biddingRoom => biddingRoom.Id.ToString());
-                var pagedRoomDtos = _mapper.Map<PageResult<IEnumerable<BiddingRoomDto>>>(pagedRooms);
 
-                return ApiResponse<PageResult<IEnumerable<BiddingRoomDto>>>.Success(pagedRoomDtos, "Rooms fouund.", 200);
+                var pagedRoomDtos = _mapper.Map<PageResult<IEnumerable<BiddingRoomDto>>>(pagedRooms);
+                return ApiResponse<PageResult<IEnumerable<BiddingRoomDto>>>.Success(pagedRoomDtos, "Rooms found.", 200);
             }
             catch (Exception ex)
             {
-
                 _logger.LogError(ex, "An error occurred while retrieving rooms by pagination. Page: { Page}, PerPage: { PerPage} ", page, perPage);
                 return ApiResponse<PageResult<IEnumerable<BiddingRoomDto>>>.Failed(false, "An error occurred while retrieving rooms by pagination.", 500, new List<string> { ex.Message });
             }
@@ -102,10 +104,10 @@ namespace HeightsAuction.Application.ServicesImplementations
                     return ApiResponse<BiddingRoomDto>.Failed(false, $"Bidding room with Id {roomId} not found", 404, new List<string>());
                 }
 
-                var bidders = biddingRoom.Bidders.ToList();
-                var biddingRoomDto = _mapper.Map<BiddingRoomDto>(biddingRoom);
-                biddingRoomDto.Bidders = _mapper.Map<ICollection<AppUser>>(bidders);
+                // Include related entities
+                biddingRoom = await _unitOfWork.BiddingRooms.IncludeRelatedEntities(biddingRoom);
 
+                var biddingRoomDto = _mapper.Map<BiddingRoomDto>(biddingRoom);
                 return ApiResponse<BiddingRoomDto>.Success(biddingRoomDto, "Bidding room retrieved successfully", 200);
             }
             catch (Exception ex)
@@ -114,6 +116,7 @@ namespace HeightsAuction.Application.ServicesImplementations
                 return ApiResponse<BiddingRoomDto>.Failed(false, "Error occurred while getting a bidding room", 500, new List<string>());
             }
         }
+
 
         public async Task<ApiResponse<JoinRoomResponseDto>> JoinBiddingRoomAsync(string userId, string roomId)
         {

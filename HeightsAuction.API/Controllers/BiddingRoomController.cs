@@ -26,7 +26,7 @@ namespace HeightsAuction.API.Controllers
             return Ok(await _biddingRoomService.JoinBiddingRoomAsync(userId, roomId));
         }
 
-        [HttpGet("Get-Bidding-Room/{Id}")]
+        [HttpGet("Get-Bidding-Room/Id")]
         public async Task<IActionResult>GetBiddingRoomById(string roomId)
         {
             return Ok(await _biddingRoomService.GetBiddingRoomByIdAsync(roomId));

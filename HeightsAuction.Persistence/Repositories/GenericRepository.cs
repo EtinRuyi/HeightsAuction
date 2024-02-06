@@ -7,7 +7,7 @@ namespace HeightsAuction.Persistence.Repositories
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
-        private readonly HAuctionDBContext _context;
+        protected readonly HAuctionDBContext _context;
 
         public GenericRepository(HAuctionDBContext context) =>_context = context;
 
@@ -23,7 +23,7 @@ namespace HeightsAuction.Persistence.Repositories
 
         public async Task<T> GetByIdAsync(string id) => await _context.Set<T>().FindAsync(id);
 
-        public async void SaveChangesAsync() => await _context.SaveChangesAsync();
+        public async Task SaveChangesAsync() => await _context.SaveChangesAsync();
 
         public void Update(T entity) => _context.Set<T>().Update(entity);
     }
