@@ -11,49 +11,43 @@ namespace HeightsAuction.API.Mapper
         {
             CreateMap<AppUser, RegisterResponseDto>().ReverseMap();
             CreateMap<RegisterRequestDto, AppUser>();
-
             CreateMap<AppUser, LoginResponseDto>().ReverseMap();
             CreateMap<LoginRequestDto, AppUser>();
-
             CreateMap<PageResult<IEnumerable<AppUser>>, PageResult<IEnumerable<RegisterResponseDto>>>();
+
 
             CreateMap<BiddingRoom, CreateRoomResponseDto>().ReverseMap();
             CreateMap<CreateRoomRequestDto, BiddingRoom>();
-
             CreateMap<BiddingRoom, BiddingRoomDto>()
                 .ForMember(dest => dest.RoomId, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Bids, opt => opt.MapFrom(src => src.Bids))
                 .ForMember(dest => dest.Bidders, opt => opt.MapFrom(src => src.Bidders)).ReverseMap();
-
-            CreateMap<PageResult<IEnumerable<BiddingRoom>>, PageResult<IEnumerable<BiddingRoomDto>>>();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             CreateMap<BiddingRoom, JoinRoomResponseDto>()
                 .ForMember(dest => dest.Bidders, opt => opt.MapFrom(src => src.Bidders))
                 .ReverseMap();
+            CreateMap<PageResult<IEnumerable<BiddingRoom>>, PageResult<IEnumerable<BiddingRoomDto>>>();
+
+
+            CreateMap<Item, CreateItemResponseDto>().ReverseMap();
+            CreateMap<CreateItemRequestDto, Item>();
+            CreateMap<Item, ItemResponseDto>().ReverseMap();
+            CreateMap<PageResult<IEnumerable<Item>>, PageResult<IEnumerable<ItemResponseDto>>>();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             CreateMap<Bid, AddBidResponseDto>().ReverseMap();
             CreateMap<AddBidRequestDto, Bid>();

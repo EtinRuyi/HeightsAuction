@@ -117,7 +117,6 @@ namespace HeightsAuction.Application.ServicesImplementations
             }
         }
 
-
         public async Task<ApiResponse<JoinRoomResponseDto>> JoinBiddingRoomAsync(string userId, string roomId)
         {
             try

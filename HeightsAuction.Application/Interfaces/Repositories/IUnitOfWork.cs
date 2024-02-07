@@ -8,6 +8,7 @@
         IPaymentRepository Payments { get; }
         IBidNotification Notifications { get; }
         IUserRepository Users { get; }
+        IItemRepository Items { get; }
         Task<int> SaveChangesAsync();
         void Dispose();
     }

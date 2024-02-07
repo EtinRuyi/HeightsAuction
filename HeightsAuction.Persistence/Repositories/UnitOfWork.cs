@@ -16,6 +16,7 @@ namespace HeightsAuction.Persistence.Repositories
             Payments = new PaymentRepository(_dbContext);
             Users = new UserRepository(_dbContext);
             Notifications = new BidNotificationRepository(_dbContext);
+            Items = new ItemRepository(_dbContext);
         }
 
         public IBiddingRoomRepository BiddingRooms { get; private set; }
@@ -24,6 +25,7 @@ namespace HeightsAuction.Persistence.Repositories
         public IPaymentRepository Payments { get; private set; }
         public IBidNotification Notifications { get; private set; }
         public IUserRepository Users { get; private set; }
+        public IItemRepository Items { get; private set; }
 
         public void Dispose() => _dbContext.Dispose();
 

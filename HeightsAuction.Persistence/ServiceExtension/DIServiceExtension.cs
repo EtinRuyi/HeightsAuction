@@ -29,6 +29,7 @@ namespace HeightsAuction.Persistence.ServiceExtension
             services.AddScoped<IBiddingRoomService, BiddingRoomService>();
             services.AddScoped<IBiddingService, BiddingService>();
             services.AddScoped<IInvoiceService, InvoiceService>();
+            services.AddScoped<IItemService, ItemService>();
             services.AddIdentity<AppUser, IdentityRole>()
             .AddEntityFrameworkStores<HAuctionDBContext>()
             .AddDefaultTokenProviders();
