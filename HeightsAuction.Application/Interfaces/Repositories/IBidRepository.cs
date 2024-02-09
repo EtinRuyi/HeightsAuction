@@ -8,5 +8,6 @@ namespace HeightsAuction.Application.Interfaces.Repositories
         Task AddBidAsync(Bid bid);
         Task GetWinningBidByRoomId(Expression<Func<Bid, bool>> condition);
         Task<List<Bid>> FindBids(Expression<Func<Bid, bool>> expression);
+        Task<List<Bid>> GetAllItemsAsync();
     }
 }

@@ -14,11 +14,11 @@ namespace HeightsAuction.API.Controllers
             _biddingService = biddingService;
         }
 
-        //[HttpPost("AddBid/{userId}")]
-        //public async Task<IActionResult> AddBid(string userId, [FromBody] AddBidRequestDto requestDto)
-        //{
-        //    return Ok(await _biddingService.AddBidAsync(userId, requestDto));
-        //}
+        [HttpPost("AddBid")]
+        public async Task<IActionResult> AddBid(string userId, [FromBody] AddBidRequestDto requestDto)
+        {
+            return Ok(await _biddingService.AddBidAsync(userId, requestDto));
+        }
 
         [HttpGet("GetWinningBid/{roomId}")]
         public async Task<IActionResult> GetWinningBid(string roomId)

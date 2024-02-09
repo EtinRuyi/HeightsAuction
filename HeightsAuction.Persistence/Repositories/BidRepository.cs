@@ -13,6 +13,8 @@ namespace HeightsAuction.Persistence.Repositories
 
         public async Task<List<Bid>> FindBids(Expression<Func<Bid, bool>> expression) => await FindAsync(expression);
 
+        public async Task<List<Bid>> GetAllItemsAsync() => await GetAllAsync();
+
         public Task GetWinningBidByRoomId(Expression<Func<Bid, bool>> condition) => FindAsync(condition);
     }
 }

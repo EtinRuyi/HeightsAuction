@@ -1903,3 +1903,36 @@
 2024-02-07 20:34:49.8351 Info Configuration initialized.
 2024-02-07 20:34:50.6434 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\omoru\Desktop\HeightsAuction\HeightsAuction.API\bin\Debug\net7.0\NLog.config
 2024-02-07 20:34:50.6773 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-07 20:46:38.2751 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-07 20:46:38.2881 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-07 20:46:38.2881 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-07 20:46:38.2881 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-07 20:46:38.2881 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-07 20:46:38.2881 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-07 20:46:38.3077 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-07 20:46:38.3224 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\omoru\Desktop\HeightsAuction\HeightsAuction.API\bin\Debug\net7.0\NLog.config
+2024-02-07 20:46:38.3390 Info Configuration initialized.
+2024-02-07 20:46:39.7550 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\omoru\Desktop\HeightsAuction\HeightsAuction.API\bin\Debug\net7.0\NLog.config
+2024-02-07 20:46:39.7550 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-07 23:30:49.6166 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-07 23:30:49.6596 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-07 23:30:49.6596 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-07 23:30:49.6596 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-07 23:30:49.6596 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-07 23:30:49.6596 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-07 23:30:49.7066 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-07 23:30:49.7512 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\omoru\Desktop\HeightsAuction\HeightsAuction.API\bin\Debug\net7.0\NLog.config
+2024-02-07 23:30:49.8145 Info Configuration initialized.
+2024-02-07 23:30:50.9958 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\omoru\Desktop\HeightsAuction\HeightsAuction.API\bin\Debug\net7.0\NLog.config
+2024-02-07 23:30:51.0279 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-09 23:22:16.6024 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-09 23:22:16.6565 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-09 23:22:16.6565 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-09 23:22:16.6565 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-09 23:22:16.6565 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-09 23:22:16.6565 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-09 23:22:16.6967 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-09 23:22:16.6967 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\omoru\Desktop\HeightsAuction\HeightsAuction.API\bin\Debug\net7.0\NLog.config
+2024-02-09 23:22:16.7238 Info Configuration initialized.
+2024-02-09 23:22:17.9516 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\omoru\Desktop\HeightsAuction\HeightsAuction.API\bin\Debug\net7.0\NLog.config
+2024-02-09 23:22:17.9649 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.

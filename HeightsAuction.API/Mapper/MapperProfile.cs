@@ -49,7 +49,7 @@ namespace HeightsAuction.API.Mapper
 
 
 
-            CreateMap<Bid, AddBidResponseDto>().ReverseMap();
+            CreateMap<Bid, BidResponseDto>().ReverseMap();
             CreateMap<AddBidRequestDto, Bid>();
             CreateMap<GenerateInvoiceRequestDto, Invoice>();
             CreateMap<Invoice, GenerateInvoiceResponseDto>().ReverseMap();
