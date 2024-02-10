@@ -31,26 +31,30 @@ namespace HeightsAuction.API.Mapper
             CreateMap<Item, CreateItemResponseDto>().ReverseMap();
             CreateMap<CreateItemRequestDto, Item>();
             CreateMap<Item, ItemResponseDto>().ReverseMap();
+            CreateMap<Item, ItemResponseDto>()
+            .ForMember(dest => dest.ItemId, opt => opt.MapFrom(src => src.Id));
             CreateMap<PageResult<IEnumerable<Item>>, PageResult<IEnumerable<ItemResponseDto>>>();
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             CreateMap<Bid, BidResponseDto>().ReverseMap();
+            CreateMap<Bid, BidResponseDto>()
+                .ForMember(dest => dest.BidId, opt => opt.MapFrom(src => src.Id)).ReverseMap();
             CreateMap<AddBidRequestDto, Bid>();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             CreateMap<GenerateInvoiceRequestDto, Invoice>();
             CreateMap<Invoice, GenerateInvoiceResponseDto>().ReverseMap();
             CreateMap<BidNotificationRequestDto, BidNotification>()

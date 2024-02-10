@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("HeightsAuction.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fdf2afb4ea0782e6dc7586e6734d8ea412195c99")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b4a33f3a1b370800dee96a12d68ea0d2849291ad")]
 [assembly: System.Reflection.AssemblyProductAttribute("HeightsAuction.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HeightsAuction.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

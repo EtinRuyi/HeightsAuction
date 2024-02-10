@@ -15,9 +15,15 @@ namespace HeightsAuction.API.Controllers
         }
 
         [HttpPost("AddBid")]
-        public async Task<IActionResult> AddBid(string userId, [FromBody] AddBidRequestDto requestDto)
+        public async Task<IActionResult> AddBidAsync(string userId, string roomId, string itemId, [FromBody] AddBidRequestDto requestDto)
         {
-            return Ok(await _biddingService.AddBidAsync(userId, requestDto));
+            return Ok(await _biddingService.AddBidAsync(userId, roomId, itemId, requestDto));
+        }
+
+        [HttpGet("GetAllBids")]
+        public async Task<IActionResult>GetAllBidsAsync()
+        {
+            return Ok(await _biddingService.GetAllBidAsync());
         }
 
         [HttpGet("GetWinningBid/{roomId}")]
