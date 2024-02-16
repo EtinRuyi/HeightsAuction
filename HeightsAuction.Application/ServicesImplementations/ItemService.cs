@@ -90,8 +90,14 @@ namespace HeightsAuction.Application.ServicesImplementations
                     return ApiResponse<PageResult<IEnumerable<ItemResponseDto>>>.Failed(false, "No items found", 400, new List<string> { });
                 }
 
+                var itemsWithRelatedEntities = new List<Item>();
+                foreach (var item in allItems)
+                {
+                    itemsWithRelatedEntities.Add(await _unitOfWork.Items.IncludeRelatedEntities(item));
+                }
+
                 var pagedItems = await Pagination<Item>.GetPager(
-                    allItems,
+                    itemsWithRelatedEntities,
                     perPage,
                     page,
                     item => item.Name,
