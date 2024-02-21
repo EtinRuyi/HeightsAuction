@@ -46,6 +46,21 @@ namespace HeightsAuction.Application.ServicesImplementations
                 await _unitOfWork.BiddingRooms.AddAsync(biddingRoom);
                 await _unitOfWork.SaveChangesAsync();
 
+                //if (biddingRoom.AuctionEndDate <= DateTime.UtcNow)
+                //{
+                //    biddingRoom.HasFinished = true;
+
+                //    // Find the bid with the highest amount
+                //    var winningBid = biddingRoom.Bids.OrderByDescending(b => b.Amount).FirstOrDefault();
+                //    if (winningBid != null)
+                //    {
+                //        biddingRoom.WinningBidId = winningBid.Id;
+                //    }
+
+                //    _unitOfWork.BiddingRooms.Update(biddingRoom);
+                //    await _unitOfWork.SaveChangesAsync();
+                //}
+
                 var responseDto = _mapper.Map<CreateRoomResponseDto>(biddingRoom);
                 responseDto.RoomId = biddingRoom.Id;
                 responseDto.CreatedBy = userId;
@@ -152,6 +167,5 @@ namespace HeightsAuction.Application.ServicesImplementations
                 return ApiResponse<JoinRoomResponseDto>.Failed(false, "Error occurred while joining bidding room", 500, new List<string> { });
             }
         }
-
     }
 }

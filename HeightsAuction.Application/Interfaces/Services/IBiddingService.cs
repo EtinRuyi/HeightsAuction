@@ -1,5 +1,4 @@
 ﻿using HeightsAuction.Application.DTOs;
-using HeightsAuction.Common.Utilities;
 using HeightsAuction.Domain;
 
 namespace HeightsAuction.Application.Interfaces.Services
@@ -9,5 +8,6 @@ namespace HeightsAuction.Application.Interfaces.Services
         Task<ApiResponse<BidResponseDto>> AddBidAsync(string userId,string roomId, string itemId, AddBidRequestDto requestDto);
         Task<ApiResponse<BidResponseDto>> GetWinningBidFromRoom(string roomId);
         Task<ApiResponse<IEnumerable<BidResponseDto>>> GetAllBidAsync();
+        //Task CloseBiddingRoomAsync(string roomId);
     }
 }

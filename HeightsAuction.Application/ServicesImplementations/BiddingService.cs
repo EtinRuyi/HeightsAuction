@@ -2,7 +2,6 @@
 using HeightsAuction.Application.DTOs;
 using HeightsAuction.Application.Interfaces.Repositories;
 using HeightsAuction.Application.Interfaces.Services;
-using HeightsAuction.Common.Utilities;
 using HeightsAuction.Domain;
 using HeightsAuction.Domain.Entities;
 using Microsoft.Extensions.Logging;
@@ -45,9 +44,10 @@ namespace HeightsAuction.Application.ServicesImplementations
                     return ApiResponse<BidResponseDto>.Failed(false, "Item not found", 404, new List<string>());
                 }
 
-                if (!biddingRoom.Bidders.Any(b => b.Id == userId) || biddingRoom.HasFinished)
+                if (!biddingRoom.Bidders.Any(b => b.Id == userId) || biddingRoom.AuctionEndDate <= DateTime.UtcNow)
                 {
-                    return ApiResponse<BidResponseDto>.Failed(false, "User cannot place bid in this room", 400, new List<string>());
+                    biddingRoom.HasFinished = true;
+                    return ApiResponse<BidResponseDto>.Failed(false, "User cannot place bid in this Bidding Room or Bidding Room is closed", 400, new List<string>());
                 }
 
                 var bid = _mapper.Map<Bid>(requestDto);
@@ -97,9 +97,11 @@ namespace HeightsAuction.Application.ServicesImplementations
         {
             try
             {
-                var winningBid = await _unitOfWork.Bids.FindAsync(b => b.BiddingRoomId == roomId && b.IsHeighestBid);
+                await UpdateWinningBid(roomId);
 
-                if (winningBid.Count == 0)
+                var winningBid = await _unitOfWork.Bids.FindAsync(b => b.BiddingRoomId == roomId);
+
+                if (!winningBid.Any())
                 {
                     return ApiResponse<BidResponseDto>.Failed(false, "No winning bid found for the specified room", 404, new List<string>());
                 }
@@ -112,6 +114,54 @@ namespace HeightsAuction.Application.ServicesImplementations
             {
                 _logger.LogError($"Error occurred while getting winning bid: {ex}");
                 return ApiResponse<BidResponseDto>.Failed(false, "Error occurred while getting winning bid", 500, new List<string>());
+            }
+        }
+
+        public async Task UpdateWinningBid(string roomId)
+        {
+            try
+            {
+                var biddingRoom = await _unitOfWork.BiddingRooms.GetRoomByIdAsync(roomId);
+                if (biddingRoom == null)
+                {
+                    _logger.LogError("Bidding room not found.");
+                    return;
+                }
+
+                // Check if the bidding room has already closed
+                if (biddingRoom.AuctionEndDate <= DateTime.UtcNow && !biddingRoom.HasFinished)
+                {
+                    var bids = await _unitOfWork.Bids.FindAsync(b => b.BiddingRoomId == roomId);
+                    if (bids.Any())
+                    {
+                        var winningBid = bids.OrderByDescending(b => b.Amount).FirstOrDefault();
+
+                        if (winningBid != null)
+                        {
+                            biddingRoom.WinningBidId = winningBid.Id;
+                            winningBid.IsHeighestBid = true;
+                            biddingRoom.HasFinished = true;
+
+                            _unitOfWork.BiddingRooms.Update(biddingRoom);
+                            _unitOfWork.Bids.Update(winningBid);
+                            await _unitOfWork.SaveChangesAsync();
+
+                            _logger.LogInformation($"Winning bid updated for bidding room {roomId}. Winning bid: {winningBid.Id}");
+                        }
+                        else
+                        {
+                            _logger.LogError("No winning bid found for the specified room.");
+                        }
+                    }
+                    else
+                    {
+                        _logger.LogError("No bids found for the specified room.");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error occurred while updating winning bid: {ex}");
             }
         }
     }
