@@ -139,8 +139,8 @@ namespace HeightsAuction.Application.ServicesImplementations
                         if (winningBid != null)
                         {
                             biddingRoom.WinningBidId = winningBid.Id;
-                            winningBid.IsHeighestBid = true;
-                            biddingRoom.HasFinished = true;
+                            //winningBid.IsHeighestBid = true;
+                            //biddingRoom.HasFinished = true;
 
                             _unitOfWork.BiddingRooms.Update(biddingRoom);
                             _unitOfWork.Bids.Update(winningBid);

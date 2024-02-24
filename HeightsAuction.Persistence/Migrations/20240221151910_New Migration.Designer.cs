@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HeightsAuction.Persistence.Migrations
 {
     [DbContext(typeof(HAuctionDBContext))]
-    [Migration("20240204224445_Init-Migration")]
-    partial class InitMigration
+    [Migration("20240221151910_New Migration")]
+    partial class NewMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -222,6 +222,7 @@ namespace HeightsAuction.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("HasFinished")

@@ -92,7 +92,11 @@ namespace HeightsAuction.Application.ServicesImplementations
         //        }
 
         //        var appUser = _mapper.Map<AppUser>(registerRequest);
+        //        appUser.NormalizedUserName = _userManager.NormalizeName(registerRequest.Email);
+        //        appUser.NormalizedEmail = _userManager.NormalizeEmail(registerRequest.Email);
+
         //        var result = await _userManager.CreateAsync(appUser, registerRequest.Password);
+
         //        if (result.Succeeded)
         //        {
         //            await _userManager.AddToRoleAsync(appUser, "User");
@@ -120,16 +124,7 @@ namespace HeightsAuction.Application.ServicesImplementations
                     return ApiResponse<RegisterResponseDto>.Failed(false, "User with this email already exists.", StatusCodes.Status400BadRequest, new List<string>());
                 }
 
-                var userName = registerRequest.Email; // You can customize this logic based on your requirements
-                var normalizedUserName = userName.ToUpper();
-                var normalizedEmail = registerRequest.Email.ToUpper();
-
                 var appUser = _mapper.Map<AppUser>(registerRequest);
-                appUser.UserName = userName;
-                appUser.NormalizedUserName = normalizedUserName;
-                appUser.Email = registerRequest.Email;
-                appUser.NormalizedEmail = normalizedEmail;
-
                 var result = await _userManager.CreateAsync(appUser, registerRequest.Password);
                 if (result.Succeeded)
                 {
@@ -147,6 +142,7 @@ namespace HeightsAuction.Application.ServicesImplementations
                 return ApiResponse<RegisterResponseDto>.Failed(false, "Error creating user.", StatusCodes.Status500InternalServerError, new List<string>() { ex.InnerException.ToString() });
             }
         }
+
 
 
         private string GenerateJwtToken(AppUser contact, string roles)
