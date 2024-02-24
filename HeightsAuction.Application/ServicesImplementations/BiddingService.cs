@@ -128,7 +128,6 @@ namespace HeightsAuction.Application.ServicesImplementations
                     return;
                 }
 
-                // Check if the bidding room has already closed
                 if (biddingRoom.AuctionEndDate <= DateTime.UtcNow && !biddingRoom.HasFinished)
                 {
                     var bids = await _unitOfWork.Bids.FindAsync(b => b.BiddingRoomId == roomId);
@@ -139,8 +138,8 @@ namespace HeightsAuction.Application.ServicesImplementations
                         if (winningBid != null)
                         {
                             biddingRoom.WinningBidId = winningBid.Id;
-                            //winningBid.IsHeighestBid = true;
-                            //biddingRoom.HasFinished = true;
+                            winningBid.IsHeighestBid = true;
+                            biddingRoom.HasFinished = true;
 
                             _unitOfWork.BiddingRooms.Update(biddingRoom);
                             _unitOfWork.Bids.Update(winningBid);
