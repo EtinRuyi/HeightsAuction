@@ -31,8 +31,9 @@ namespace HeightsAuction.Application.ServicesImplementations
                     return ApiResponse<GenerateInvoiceResponseDto>.Failed(false, "Bidding room not found", 404, new List<string>());
                 }
 
-                if (biddingRoom.HasFinished)
+                if (biddingRoom.AuctionEndDate <= DateTime.UtcNow)
                 {
+                    biddingRoom.HasFinished = true;
                     return ApiResponse<GenerateInvoiceResponseDto>.Failed(false, "Bidding room has finished", 400, new List<string>());
                 }
 

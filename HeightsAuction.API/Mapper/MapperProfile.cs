@@ -15,7 +15,6 @@ namespace HeightsAuction.API.Mapper
             CreateMap<LoginRequestDto, AppUser>();
             CreateMap<PageResult<IEnumerable<AppUser>>, PageResult<IEnumerable<RegisterResponseDto>>>();
 
-
             CreateMap<BiddingRoom, CreateRoomResponseDto>().ReverseMap();
             CreateMap<CreateRoomRequestDto, BiddingRoom>();
             CreateMap<BiddingRoom, BiddingRoomDto>()
@@ -23,10 +22,10 @@ namespace HeightsAuction.API.Mapper
                 .ForMember(dest => dest.Bids, opt => opt.MapFrom(src => src.Bids))
                 .ForMember(dest => dest.Bidders, opt => opt.MapFrom(src => src.Bidders)).ReverseMap();
             CreateMap<BiddingRoom, JoinRoomResponseDto>()
+                .ForMember(dest => dest.RoomId, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Bidders, opt => opt.MapFrom(src => src.Bidders))
                 .ReverseMap();
             CreateMap<PageResult<IEnumerable<BiddingRoom>>, PageResult<IEnumerable<BiddingRoomDto>>>();
-
 
             CreateMap<Item, CreateItemResponseDto>().ReverseMap();
             CreateMap<CreateItemRequestDto, Item>();
@@ -35,28 +34,15 @@ namespace HeightsAuction.API.Mapper
             .ForMember(dest => dest.ItemId, opt => opt.MapFrom(src => src.Id));
             CreateMap<PageResult<IEnumerable<Item>>, PageResult<IEnumerable<ItemResponseDto>>>();
 
-
             CreateMap<Bid, BidResponseDto>().ReverseMap();
             CreateMap<Bid, BidResponseDto>()
                 .ForMember(dest => dest.BidId, opt => opt.MapFrom(src => src.Id)).ReverseMap();
             CreateMap<AddBidRequestDto, Bid>();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             CreateMap<GenerateInvoiceRequestDto, Invoice>();
-            CreateMap<Invoice, GenerateInvoiceResponseDto>().ReverseMap();
+            CreateMap<Invoice, GenerateInvoiceResponseDto>()
+                .ForMember(dest => dest.InvoiceId, opt => opt.MapFrom(src => src.Id)).ReverseMap();
+
             CreateMap<BidNotificationRequestDto, BidNotification>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore());
             CreateMap<BidNotification, BidNotificationResponseDto>();

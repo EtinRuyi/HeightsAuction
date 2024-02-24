@@ -18,11 +18,11 @@ try
     // Add services to the container.
     builder.Services.AddDependencies(configuration);
     builder.Services.AddMailService(configuration);
-    //builder.Services.AddControllers();
-    builder.Services.AddControllers().AddJsonOptions(options =>
-    {
-        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
-    });
+    builder.Services.AddControllers();
+    //builder.Services.AddControllers().AddJsonOptions(options =>
+    //{
+    //    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+    //});
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
     builder.Services.AddAuthentication();
