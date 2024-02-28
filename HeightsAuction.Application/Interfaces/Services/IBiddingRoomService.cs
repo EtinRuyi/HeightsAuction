@@ -10,5 +10,6 @@ namespace HeightsAuction.Application.Interfaces.Services
         Task<ApiResponse<JoinRoomResponseDto>> JoinBiddingRoomAsync(string userId, string roomId);
         Task<ApiResponse<BiddingRoomDto>> GetBiddingRoomByIdAsync(string roomId);
         Task<ApiResponse<PageResult<IEnumerable<BiddingRoomDto>>>> GetAllBiddingRoomsAsync(int page, int perPage);
+        Task CheckAndUpdateExpiredRoomsAsync();
     }
 }

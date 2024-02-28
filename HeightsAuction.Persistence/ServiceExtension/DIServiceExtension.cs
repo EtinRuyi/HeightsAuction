@@ -1,4 +1,6 @@
-﻿using HeightsAuction.Application.Interfaces.Repositories;
+﻿using Hangfire;
+using Hangfire.SqlServer;
+using HeightsAuction.Application.Interfaces.Repositories;
 using HeightsAuction.Application.Interfaces.Services;
 using HeightsAuction.Application.ServicesImplementations;
 using HeightsAuction.Domain.Entities;
@@ -18,6 +20,21 @@ namespace HeightsAuction.Persistence.ServiceExtension
         {
             services.AddDbContext<HAuctionDBContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Scoped);
+
+            var hangfireConnectionString = configuration.GetConnectionString("DefaultConnection");
+            services.AddHangfire(options => options
+                .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                .UseSimpleAssemblyNameTypeSerializer()
+                .UseRecommendedSerializerSettings()
+                .UseSqlServerStorage(hangfireConnectionString, new SqlServerStorageOptions
+                {
+                    CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+                    SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+                    QueuePollInterval = TimeSpan.Zero,
+                    UseRecommendedIsolationLevel = true,
+                    DisableGlobalLocks = true
+                }));
+
             var emailSettings = new EmailSettings();
             configuration.GetSection("EmailSettings").Bind(emailSettings);
             services.AddSingleton(emailSettings);
@@ -34,7 +51,8 @@ namespace HeightsAuction.Persistence.ServiceExtension
             .AddEntityFrameworkStores<HAuctionDBContext>()
             .AddDefaultTokenProviders();
             services.AddScoped<RoleManager<IdentityRole>>();
-            
+            services.AddHangfireServer();
+
         }
     }
 }

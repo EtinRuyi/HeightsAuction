@@ -5,6 +5,8 @@ using HeightsAuction.Common.Utilities;
 using HeightsAuction.Persistence.ServiceExtension;
 using HeightsAuction.API.APIConfigurations;
 using System.Text.Json.Serialization;
+using Hangfire;
+using HeightsAuction.Application.Interfaces.Services;
 
 
 
@@ -30,6 +32,7 @@ try
     builder.Services.AddAutoMapper(typeof(MapperProfile));
     builder.Logging.ClearProviders();
     builder.Host.UseNLog();
+
     var app = builder.Build();
 
     if (app.Environment.IsDevelopment())
@@ -48,6 +51,10 @@ try
     app.UseAuthentication();
 
     app.UseAuthorization();
+
+    app.UseHangfireDashboard("/dashboard");
+
+    RecurringJob.AddOrUpdate<IBiddingRoomService>("CheckExpiredRooms", service => service.CheckAndUpdateExpiredRoomsAsync(), Cron.MinuteInterval(10));
 
     app.MapControllers();
 

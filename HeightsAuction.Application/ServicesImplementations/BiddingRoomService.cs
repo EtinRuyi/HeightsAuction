@@ -14,6 +14,8 @@ namespace HeightsAuction.Application.ServicesImplementations
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly ILogger<BiddingRoomService> _logger;
+        //private readonly IBackgroundJobClient _backgroundJobClient;
+        //private readonly IRecurringJobManager _recurringJobManager;
 
         public BiddingRoomService(IUnitOfWork unitOfWork, 
             IMapper mapper, ILogger<BiddingRoomService> logger)
@@ -21,6 +23,29 @@ namespace HeightsAuction.Application.ServicesImplementations
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _logger = logger;
+        }
+
+        public async Task CheckAndUpdateExpiredRoomsAsync()
+        {
+            try
+            {
+                var biddingRooms = await _unitOfWork.BiddingRooms.GetAllRoomssAsync();
+
+                foreach (var room in biddingRooms)
+                {
+                    if (room.AuctionEndDate <= DateTime.UtcNow && !room.HasFinished)
+                    {
+                        room.HasFinished = true;
+                        _unitOfWork.BiddingRooms.Update(room);
+                    }
+                }
+
+                await _unitOfWork.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error occurred while checking and updating auction status: {ex}");
+            }
         }
 
         public async Task<ApiResponse<CreateRoomResponseDto>> CreateBiddingRoomAsync(string userId, CreateRoomRequestDto requestDto)
@@ -45,21 +70,6 @@ namespace HeightsAuction.Application.ServicesImplementations
                 biddingRoom.Bidders.Add(existingUser);
                 await _unitOfWork.BiddingRooms.AddAsync(biddingRoom);
                 await _unitOfWork.SaveChangesAsync();
-
-                //if (biddingRoom.AuctionEndDate <= DateTime.UtcNow)
-                //{
-                //    biddingRoom.HasFinished = true;
-
-                //    // Find the bid with the highest amount
-                //    var winningBid = biddingRoom.Bids.OrderByDescending(b => b.Amount).FirstOrDefault();
-                //    if (winningBid != null)
-                //    {
-                //        biddingRoom.WinningBidId = winningBid.Id;
-                //    }
-
-                //    _unitOfWork.BiddingRooms.Update(biddingRoom);
-                //    await _unitOfWork.SaveChangesAsync();
-                //}
 
                 var responseDto = _mapper.Map<CreateRoomResponseDto>(biddingRoom);
                 responseDto.RoomId = biddingRoom.Id;
@@ -167,5 +177,7 @@ namespace HeightsAuction.Application.ServicesImplementations
                 return ApiResponse<JoinRoomResponseDto>.Failed(false, "Error occurred while joining bidding room", 500, new List<string> { });
             }
         }
+
+
     }
 }
