@@ -36,9 +36,8 @@ namespace HeightsAuction.Application.ServicesImplementations
                     return ApiResponse<CreateItemResponseDto>.Failed(false, "Bidding Room not found", 400, new List<string> { });
                 }
 
-                if (existingRoom.AuctionEndDate <= DateTime.UtcNow)
+                if (existingRoom.HasFinished)
                 {
-                    existingRoom.HasFinished = true;
                     return ApiResponse<CreateItemResponseDto>.Failed(false, "Cannot add item to this BiddingRoom, BiddingRoom is closed", 400, new List<string> { });
                 }
 

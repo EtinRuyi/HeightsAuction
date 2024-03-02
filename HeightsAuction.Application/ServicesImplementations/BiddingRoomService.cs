@@ -158,9 +158,8 @@ namespace HeightsAuction.Application.ServicesImplementations
                     return ApiResponse<JoinRoomResponseDto>.Failed(false, "Bidding room does not exist", 404, new List<string> { });
                 }
 
-                if (biddingRoom.AuctionEndDate <= DateTime.UtcNow)
+                if (biddingRoom.HasFinished)
                 {
-                    biddingRoom.HasFinished = true;
                     return ApiResponse<JoinRoomResponseDto>.Failed(false, "Bidding room has closed", 400, new List<string> { });
                 }
 
