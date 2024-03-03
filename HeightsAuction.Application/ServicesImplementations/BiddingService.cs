@@ -5,7 +5,6 @@ using HeightsAuction.Application.Interfaces.Services;
 using HeightsAuction.Domain;
 using HeightsAuction.Domain.Entities;
 using Microsoft.Extensions.Logging;
-using System.Linq;
 
 namespace HeightsAuction.Application.ServicesImplementations
 {
@@ -72,7 +71,6 @@ namespace HeightsAuction.Application.ServicesImplementations
             }
         }
 
-
         public async Task<ApiResponse<IEnumerable<BidResponseDto>>> GetAllBidAsync()
         {
             try
@@ -93,66 +91,6 @@ namespace HeightsAuction.Application.ServicesImplementations
             }
         }
 
-        //public async Task<ApiResponse<BidResponseDto>> GetWinningBidFromRoom(string roomId)
-        //{
-        //    try
-        //    {
-        //        Bid winningBid = null;
-
-        //        var biddingRoom = await _unitOfWork.BiddingRooms.GetRoomByIdAsync(roomId);
-        //        if (biddingRoom == null)
-        //        {
-        //            return ApiResponse<BidResponseDto>.Failed(false, "No Bidding room found", 500, new List<string>());
-        //        }
-
-        //        if (biddingRoom.HasFinished)
-        //        {
-        //            var bids = await _unitOfWork.Bids.FindAsync(b => b.BiddingRoomId == roomId);
-        //            if (bids.Any())
-        //            {
-        //                winningBid = bids.OrderByDescending(b => b.Amount).FirstOrDefault();
-
-        //                if (winningBid != null)
-        //                {
-        //                    winningBid.IsHeighestBid = true;
-        //                    biddingRoom.WinningBidId = winningBid.Id;
-
-        //                    _unitOfWork.Bids.Update(winningBid);
-        //                    _unitOfWork.BiddingRooms.Update(biddingRoom);
-        //                    await _unitOfWork.SaveChangesAsync();
-        //                }
-        //                else
-        //                {
-        //                    return ApiResponse<BidResponseDto>.Failed(false, "No winning bid found for the specified room.", 500, new List<string>());
-        //                }
-        //            }
-        //            else
-        //            {
-        //                return ApiResponse<BidResponseDto>.Failed(false, "No bids found for the specified room.", 500, new List<string>());
-        //            }
-        //        }
-        //        else
-        //        {
-        //            return ApiResponse<BidResponseDto>.Failed(false, "Cannot determine winning bid yet; Bidding Room is still active.", 500, new List<string>());
-        //        }
-
-        //        if (winningBid != null)
-        //        {
-        //            var responseDto = _mapper.Map<BidResponseDto>(winningBid);
-        //            return ApiResponse<BidResponseDto>.Success(responseDto, "Winning bid retrieved successfully", 200);
-        //        }
-        //        else
-        //        {
-        //            return ApiResponse<BidResponseDto>.Failed(false, "No winning bid found for the specified room.", 500, new List<string>());
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError($"Error occurred while getting winning bid: {ex}");
-        //        return ApiResponse<BidResponseDto>.Failed(false, "Error occurred while getting winning bid", 500, new List<string>());
-        //    }
-        //}
-
         public async Task<ApiResponse<BidResponseDto>> GetWinningBidFromRoom(string roomId)
         {
             try
@@ -167,19 +105,10 @@ namespace HeightsAuction.Application.ServicesImplementations
                 {
                     var winningBid = await _unitOfWork.Bids.FindAsync(bid => bid.BiddingRoomId == roomId && bid.IsHeighestBid);
 
-                    if (winningBid != null)
+                    if (winningBid != null && winningBid.Any())
                     {
-                        //var responseDto = _mapper.Map<BidResponseDto>(winningBid);
-                        var responseDto = new BidResponseDto
-                        {
-                            BidId = winningBid.Id,
-                            Amount = winningBid.Amount,
-                            BidTime = winningBid.BidTime,
-                            UserId = winningBid.UserId,
-                            BiddingRoomId = winningBid.BiddingRoomId,
-                            ItemId = winningBid.ItemId,
-                            IsHeighestBid = winningBid.IsHeighestBid
-                        };
+                        var winningBidItem = winningBid.FirstOrDefault();
+                        var responseDto = _mapper.Map<BidResponseDto>(winningBidItem);
                         return ApiResponse<BidResponseDto>.Success(responseDto, "Winning bid retrieved successfully", 200);
                     }
                     else
