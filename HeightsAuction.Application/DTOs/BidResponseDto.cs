@@ -8,5 +8,6 @@
         public string UserId { get; set; }
         public string BiddingRoomId { get; set; }
         public string ItemId { get; set; }
+        public bool IsHeighestBid { get; set; }
     }
 }

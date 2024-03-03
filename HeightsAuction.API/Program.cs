@@ -7,6 +7,7 @@ using HeightsAuction.API.APIConfigurations;
 using System.Text.Json.Serialization;
 using Hangfire;
 using HeightsAuction.Application.Interfaces.Services;
+using HeightsAuction.Application.ServicesImplementations;
 
 
 
@@ -55,6 +56,7 @@ try
     app.UseHangfireDashboard("/dashboard");
 
     RecurringJob.AddOrUpdate<IBiddingRoomService>("CheckExpiredRooms", service => service.CheckAndUpdateExpiredRoomsAsync(), Cron.MinuteInterval(10));
+    RecurringJob.AddOrUpdate<IBiddingService>("UpdateWinningBids", service => service.UpdateWinningBidsAsync(), Cron.MinuteInterval(10));
 
     app.MapControllers();
 
