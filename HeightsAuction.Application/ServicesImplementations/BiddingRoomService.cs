@@ -14,8 +14,6 @@ namespace HeightsAuction.Application.ServicesImplementations
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly ILogger<BiddingRoomService> _logger;
-        //private readonly IBackgroundJobClient _backgroundJobClient;
-        //private readonly IRecurringJobManager _recurringJobManager;
 
         public BiddingRoomService(IUnitOfWork unitOfWork, 
             IMapper mapper, ILogger<BiddingRoomService> logger)
