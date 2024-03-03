@@ -39,7 +39,7 @@ namespace HeightsAuction.API.Mapper
                 .ForMember(dest => dest.BidId, opt => opt.MapFrom(src => src.Id)).ReverseMap();
             CreateMap<AddBidRequestDto, Bid>();
 
-            CreateMap<GenerateInvoiceRequestDto, Invoice>();
+            //CreateMap<GenerateInvoiceRequestDto, Invoice>();
             CreateMap<Invoice, GenerateInvoiceResponseDto>()
                 .ForMember(dest => dest.InvoiceId, opt => opt.MapFrom(src => src.Id)).ReverseMap();
 

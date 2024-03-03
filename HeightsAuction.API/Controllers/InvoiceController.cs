@@ -16,9 +16,9 @@ namespace HeightsAuction.API.Controllers
         }
 
         [HttpPost("generate")]
-        public async Task<IActionResult> GenerateInvoice([FromBody] GenerateInvoiceRequestDto requestDto)
+        public async Task<IActionResult> GenerateInvoice(string roomId)
         {
-            var result = await _invoiceService.GenerateInvoiceAsync(requestDto);
+            var result = await _invoiceService.GenerateInvoiceAsync(roomId);
             return StatusCode(result.StatusCode, result);
         }
     }

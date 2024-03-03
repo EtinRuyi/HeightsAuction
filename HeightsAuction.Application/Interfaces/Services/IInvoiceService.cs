@@ -5,6 +5,6 @@ namespace HeightsAuction.Application.Interfaces.Services
 {
     public interface IInvoiceService
     {
-        Task<ApiResponse<GenerateInvoiceResponseDto>> GenerateInvoiceAsync(GenerateInvoiceRequestDto requestDto);
+        Task<ApiResponse<GenerateInvoiceResponseDto>> GenerateInvoiceAsync(string roomId);
     }
 }
