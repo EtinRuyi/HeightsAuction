@@ -5,7 +5,7 @@ namespace HeightsAuction.Application.Interfaces.Services
 {
     public interface IBiddingService
     {
-        Task<ApiResponse<BidResponseDto>> AddBidAsync(string userId,string roomId, string itemId, AddBidRequestDto requestDto);
+        Task<ApiResponse<AddBidResponseDto>> AddBidAsync(string userId,string roomId, string itemId, AddBidRequestDto requestDto);
         Task<ApiResponse<BidResponseDto>> GetWinningBidFromRoom(string roomId);
         Task<ApiResponse<IEnumerable<BidResponseDto>>> GetAllBidAsync();
         Task UpdateWinningBidsAsync();

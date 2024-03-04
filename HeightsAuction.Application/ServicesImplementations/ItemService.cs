@@ -112,5 +112,17 @@ namespace HeightsAuction.Application.ServicesImplementations
 
             }
         }
+
+        public async Task UpdateCurrentBidPrice(Item item)
+        {
+            var bids = await _unitOfWork.Bids.FindBids(b => b.ItemId == item.Id);
+            if (bids.Any())
+            {
+                var highestBidAmount = bids.Max(b => b.Amount);
+                item.CurrentBidPrice = highestBidAmount;
+                _unitOfWork.Items.Update(item);
+                await _unitOfWork.SaveChangesAsync();
+            }
+        }
     }
 }

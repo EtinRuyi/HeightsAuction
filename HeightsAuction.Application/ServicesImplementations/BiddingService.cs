@@ -13,40 +13,43 @@ namespace HeightsAuction.Application.ServicesImplementations
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly ILogger<BiddingService> _logger;
+        private readonly IItemService _itemService;
 
         public BiddingService(IUnitOfWork unitOfWork,
-            IMapper mapper, ILogger<BiddingService> logger)
+            IMapper mapper, ILogger<BiddingService> logger, 
+            IItemService itemService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _logger = logger;
+            _itemService = itemService;
         }
 
-        public async Task<ApiResponse<BidResponseDto>> AddBidAsync(string userId, string roomId, string itemId, AddBidRequestDto requestDto)
+        public async Task<ApiResponse<AddBidResponseDto>> AddBidAsync(string userId, string roomId, string itemId, AddBidRequestDto requestDto)
         {
             try
             {
                 var user = await _unitOfWork.Users.GetByIdAsync(userId);
                 if (user == null)
                 {
-                    return ApiResponse<BidResponseDto>.Failed(false, "User not found", 404, new List<string>());
+                    return ApiResponse<AddBidResponseDto>.Failed(false, "User not found", 404, new List<string>());
                 }
 
                 var biddingRoom = await _unitOfWork.BiddingRooms.GetRoomByIdAsync(roomId);
                 if (biddingRoom == null)
                 {
-                    return ApiResponse<BidResponseDto>.Failed(false, "Bidding Room not found", 404, new List<string>());
+                    return ApiResponse<AddBidResponseDto>.Failed(false, "Bidding Room not found", 404, new List<string>());
                 }
 
                 var item = await _unitOfWork.Items.GetByIdAsync(itemId);
                 if (item == null)
                 {
-                    return ApiResponse<BidResponseDto>.Failed(false, "Item not found", 404, new List<string>());
+                    return ApiResponse<AddBidResponseDto>.Failed(false, "Item not found", 404, new List<string>());
                 }
 
                 if (!biddingRoom.Bidders.Any(b => b.Id == userId) || biddingRoom.HasFinished)
                 {
-                    return ApiResponse<BidResponseDto>.Failed(false, "User cannot place bid in this Bidding Room or Bidding Room is closed", 400, new List<string>());
+                    return ApiResponse<AddBidResponseDto>.Failed(false, "User cannot place bid in this Bidding Room or Bidding Room is closed", 400, new List<string>());
                 }
 
                 var bid = _mapper.Map<Bid>(requestDto);
@@ -59,15 +62,19 @@ namespace HeightsAuction.Application.ServicesImplementations
                 await _unitOfWork.Bids.AddAsync(bid);
                 await _unitOfWork.SaveChangesAsync();
 
-                var responseDto = _mapper.Map<BidResponseDto>(bid);
-                responseDto.ItemId = itemId;
+                await _itemService.UpdateCurrentBidPrice(item);
 
-                return ApiResponse<BidResponseDto>.Success(responseDto, "Bid added successfully", 200);
+                var responseDto = _mapper.Map<AddBidResponseDto>(bid);
+                responseDto.BidId = bid.Id;
+                responseDto.ItemId = itemId;
+                responseDto.CurrentBidPrice = item.CurrentBidPrice;
+
+                return ApiResponse<AddBidResponseDto>.Success(responseDto, "Bid added successfully", 200);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Error occurred while adding bid: {ex}");
-                return ApiResponse<BidResponseDto>.Failed(false, "Error occurred while adding bid", 500, new List<string>());
+                return ApiResponse<AddBidResponseDto>.Failed(false, "Error occurred while adding bid", 500, new List<string>());
             }
         }
 
