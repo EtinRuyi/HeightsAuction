@@ -55,8 +55,8 @@ try
 
     app.UseHangfireDashboard("/dashboard");
 
-    RecurringJob.AddOrUpdate<IBiddingRoomService>("CheckExpiredRooms", service => service.CheckAndUpdateExpiredRoomsAsync(), Cron.MinuteInterval(10));
-    RecurringJob.AddOrUpdate<IBiddingService>("UpdateWinningBids", service => service.UpdateWinningBidsAsync(), Cron.MinuteInterval(10));
+    RecurringJob.AddOrUpdate<IBiddingRoomService>("CheckExpiredRooms", service => service.CheckAndUpdateExpiredRoomsAsync(), Cron.MinuteInterval(5));
+    RecurringJob.AddOrUpdate<IBiddingService>("UpdateWinningBids", service => service.UpdateWinningBidsAsync(), Cron.MinuteInterval(5));
 
     app.MapControllers();
 

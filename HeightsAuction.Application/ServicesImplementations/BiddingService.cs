@@ -16,7 +16,7 @@ namespace HeightsAuction.Application.ServicesImplementations
         private readonly IItemService _itemService;
 
         public BiddingService(IUnitOfWork unitOfWork,
-            IMapper mapper, ILogger<BiddingService> logger, 
+            IMapper mapper, ILogger<BiddingService> logger,
             IItemService itemService)
         {
             _unitOfWork = unitOfWork;
@@ -35,7 +35,7 @@ namespace HeightsAuction.Application.ServicesImplementations
                     return ApiResponse<AddBidResponseDto>.Failed(false, "User not found", 404, new List<string>());
                 }
 
-                var biddingRoom = await _unitOfWork.BiddingRooms.GetRoomByIdAsync(roomId);
+                var biddingRoom = await _unitOfWork.BiddingRooms.GetByIdAsync(roomId);
                 if (biddingRoom == null)
                 {
                     return ApiResponse<AddBidResponseDto>.Failed(false, "Bidding Room not found", 404, new List<string>());
@@ -47,9 +47,24 @@ namespace HeightsAuction.Application.ServicesImplementations
                     return ApiResponse<AddBidResponseDto>.Failed(false, "Item not found", 404, new List<string>());
                 }
 
+                if (biddingRoom.AuctionStartDate > DateTime.UtcNow)
+                {
+                    return ApiResponse<AddBidResponseDto>.Failed(false, "Bidding has not started", 400, new List<string>());
+                }
+
                 if (!biddingRoom.Bidders.Any(b => b.Id == userId) || biddingRoom.HasFinished)
                 {
                     return ApiResponse<AddBidResponseDto>.Failed(false, "User cannot place bid in this Bidding Room or Bidding Room is closed", 400, new List<string>());
+                }
+
+                if (requestDto.Amount <= item.StartingPrice)
+                {
+                    return ApiResponse<AddBidResponseDto>.Failed(false, "Bid Amount cannot be accepted, please increase Bid Amount", 400, new List<string>());
+                }
+
+                if (requestDto.Amount <= item.CurrentBidPrice)
+                {
+                    return ApiResponse<AddBidResponseDto>.Failed(false, "Bid Amount cannot be accepted, please increase Bid Amount", 400, new List<string>());
                 }
 
                 var bid = _mapper.Map<Bid>(requestDto);
