@@ -25,7 +25,8 @@ namespace HeightsAuction.Application.ServicesImplementations
             _itemService = itemService;
         }
 
-        public async Task<ApiResponse<AddBidResponseDto>> AddBidAsync(string userId, string roomId, string itemId, AddBidRequestDto requestDto)
+        public async Task<ApiResponse<AddBidResponseDto>> AddBidAsync(string userId, string roomId, 
+            string itemId, AddBidRequestDto requestDto)
         {
             try
             {
